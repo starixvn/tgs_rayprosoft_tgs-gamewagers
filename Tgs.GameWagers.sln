@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameWagers", "Tgs.GameWagers\Tgs.GameWagers.csproj", "{472203BC-14EB-4350-A3E7-F3DD66078536}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameWagers.Core", "Tgs.GameWagers.Core\Tgs.GameWagers.Core.csproj", "{E5CB0574-A9ED-4438-86F9-EF92E33F245A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameWagers.Repositories", "Tgs.GameWagers.Repositories\Tgs.GameWagers.Repositories.csproj", "{68749101-7D68-4574-AB2B-A0A080FD2295}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameWagers.Common", "Tgs.GameWagers.Common\Tgs.GameWagers.Common.csproj", "{AF4F1ACA-E3FE-4CD1-A209-BC10B98526F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameWagers.Client", "Tgs.GameWagers.Client\Tgs.GameWagers.Client.csproj", "{7ADD2FC9-79B2-43E6-85F0-15FBE179561E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameWagers.IntegrationTest", "Tgs.GameWagers.IntegrationTest\Tgs.GameWagers.IntegrationTest.csproj", "{448E367A-2F78-48F3-A18F-764976C1A241}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{472203BC-14EB-4350-A3E7-F3DD66078536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{472203BC-14EB-4350-A3E7-F3DD66078536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{472203BC-14EB-4350-A3E7-F3DD66078536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{472203BC-14EB-4350-A3E7-F3DD66078536}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5CB0574-A9ED-4438-86F9-EF92E33F245A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5CB0574-A9ED-4438-86F9-EF92E33F245A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5CB0574-A9ED-4438-86F9-EF92E33F245A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5CB0574-A9ED-4438-86F9-EF92E33F245A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68749101-7D68-4574-AB2B-A0A080FD2295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68749101-7D68-4574-AB2B-A0A080FD2295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68749101-7D68-4574-AB2B-A0A080FD2295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68749101-7D68-4574-AB2B-A0A080FD2295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF4F1ACA-E3FE-4CD1-A209-BC10B98526F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF4F1ACA-E3FE-4CD1-A209-BC10B98526F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF4F1ACA-E3FE-4CD1-A209-BC10B98526F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF4F1ACA-E3FE-4CD1-A209-BC10B98526F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ADD2FC9-79B2-43E6-85F0-15FBE179561E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ADD2FC9-79B2-43E6-85F0-15FBE179561E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ADD2FC9-79B2-43E6-85F0-15FBE179561E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ADD2FC9-79B2-43E6-85F0-15FBE179561E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{448E367A-2F78-48F3-A18F-764976C1A241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{448E367A-2F78-48F3-A18F-764976C1A241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{448E367A-2F78-48F3-A18F-764976C1A241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{448E367A-2F78-48F3-A18F-764976C1A241}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D831954-04C3-43BF-A367-E298B1D939DB}
+	EndGlobalSection
+EndGlobal

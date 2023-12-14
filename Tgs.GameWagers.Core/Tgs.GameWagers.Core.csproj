@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+    <PackageReference Include="Tgs.GameWagers.Domains" Version="0.0.10" />
+    <PackageReference Include="TGS.ServiceUtility" Version="0.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tgs.GameWagers.Common\Tgs.GameWagers.Common.csproj" />
+  </ItemGroup>
+
+</Project>
