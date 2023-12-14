@@ -8,15 +8,8 @@ using Tgs.GameWagers.Domains;
 
 namespace Tgs.GameWagers.Repositories;
 
-internal class BrandWagerGameMinsStatsRepository : IBrandWagerGameMinsStatsRepository
+internal class BrandWagerGameMinsStatsRepository(IGameWagersMongoConnectionSettings connectionSettings) : IBrandWagerGameMinsStatsRepository
 {
-    private readonly IGameWagersMongoConnectionSettings _connectionSettings;
-
-    public BrandWagerGameMinsStatsRepository(IGameWagersMongoConnectionSettings connectionSettings)
-    {
-        _connectionSettings = connectionSettings ?? throw new ArgumentNullException(nameof(connectionSettings));
-    }
-
     public async IAsyncEnumerable<BrandWagerGameMinsStats> QueryAsync(
         string brandCode,
         DateTimeOffset startOn,
@@ -25,7 +18,7 @@ internal class BrandWagerGameMinsStatsRepository : IBrandWagerGameMinsStatsRepos
         bool isAscending = true,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        var collection = _connectionSettings.GetBrandWagerGameMinsStatsCollection(brandCode);
+        var collection = connectionSettings.GetBrandWagerGameMinsStatsCollection(brandCode);
 
         var aggregate = await collection
             .Aggregate()

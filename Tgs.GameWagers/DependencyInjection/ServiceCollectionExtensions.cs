@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tgs.GameWagers;
+using Tgs.GameWagers.Domains;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -10,11 +10,7 @@ public static class ServiceCollectionExtensions
         Action<IServiceProvider, DbContextOptionsBuilder> tgsConfigure,
         Action<MongoDBOptions, IServiceProvider> mongoDBconfigure)
         => services
-        .AddOptions<MongoDBOptions>()
-        .Configure(mongoDBconfigure)
-        .Services
-        .AddSingleton<MongoDBConnectionManager>()
-        .AddGameWagersDomains((sp) => sp.GetRequiredService<MongoDBConnectionManager>().MongoClient)
+        .AddGameWagersDomains(mongoDBconfigure)
         .AddGameWagersCore()
         .AddGameWagersRepositories(tgsConfigure: tgsConfigure);
 }
