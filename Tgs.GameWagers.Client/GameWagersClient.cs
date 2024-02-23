@@ -125,4 +125,16 @@ internal class GameWagersClient : IGameWagersClient
             .ToEnumerable()
             .ToAsyncEnumerable();
     }
+
+    public async ValueTask<GameWagerStatPlayerAccumInfo> GameWagerStatGetPlayerAccumAsync(string playerCode, CancellationToken cancellationToken = default)
+        => await _httpClient.GetAsync($"/stat/{playerCode}/accum", cancellationToken)
+        .ToAsyncEnumerable()
+        .Do(response => response.EnsureSuccessStatusCode())
+        .Where(response => response.StatusCode == System.Net.HttpStatusCode.OK)
+        .SelectMany(response => response.Content
+            .ReadFromJsonAsync<GameWagerStatPlayerAccumInfo>(_SerializerOptions, cancellationToken)
+            .ToAsyncEnumerable())
+        .FirstOrDefaultAsync(cancellationToken: cancellationToken)
+        .ConfigureAwait(false)
+        ?? throw new NullReferenceException($"This player's VIP Level does not exist.{playerCode}");
 }

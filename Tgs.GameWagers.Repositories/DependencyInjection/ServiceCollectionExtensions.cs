@@ -16,5 +16,9 @@ public static class ServiceCollectionExtensions
         .AddScoped<IDbConnection>((sp) => sp.GetRequiredService<TgsContext>().Database.GetDbConnection())
         .AddTransient<IBrandWagerGameMinsStatsRepository, BrandWagerGameMinsStatsRepository>()
         .AddTransient<IBrandWagerPlayerMinsStatsRepository, BrandWagerPlayerMinsStatsRepository>()
-        .AddTransient<IGameWagerFirstRepository, GameWagerFirstRepository>();
+        .AddTransient<IGameWagerFirstRepository, GameWagerFirstRepository>()
+        .AddTransient<IGameWagerRepository, GameWagerRepository>()
+        .AddTransient<IGameWagerStatCloseRepository, GameWagerStatCloseRepository>()
+        .AddTransient<IGameWagerStatHourlyCloseRepository, GameWagerStatHourlyCloseRepository>()
+        .AddTransient<IGameWagerStatDailyCloseRepository, GameWagerStatDailyCloseRepository>();
 }

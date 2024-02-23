@@ -26,6 +26,16 @@ public partial class TgsContext : DbContext
 
     public virtual DbSet<GameWagerFirst> GameWagerFirsts { get; set; }
 
+    public virtual DbSet<GameWagerStatClose> GameWagerStatCloses { get; set; }
+
+    public virtual DbSet<GameWagerStatDailyClose> GameWagerStatDailyCloses { get; set; }
+
+    public virtual DbSet<GameWagerStatDailyZoneClose> GameWagerStatDailyZoneCloses { get; set; }
+
+    public virtual DbSet<GameWagerStatHourlyClose> GameWagerStatHourlyCloses { get; set; }
+
+    public virtual DbSet<GameWagerStatHourlyZoneClose> GameWagerStatHourlyZoneCloses { get; set; }
+
     public virtual DbSet<Licensee> Licensees { get; set; }
 
     public virtual DbSet<Player> Players { get; set; }
@@ -41,15 +51,20 @@ public partial class TgsContext : DbContext
             .HasPostgresExtension("pg_trgm")
             .HasPostgresExtension("uuid-ossp");
 
-            modelBuilder.ApplyConfiguration(new Configurations.BrandConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.GameConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.GameProviderConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.GameWagerConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.GameWagerDetailConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.GameWagerFirstConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.LicenseeConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.PlayerConfiguration());
-            modelBuilder.ApplyConfiguration(new Configurations.ResellerConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.BrandConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameProviderConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameWagerConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameWagerDetailConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameWagerFirstConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatCloseConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatDailyCloseConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatDailyZoneCloseConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatHourlyCloseConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatHourlyZoneCloseConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.LicenseeConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.PlayerConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.ResellerConfiguration());
         OnModelCreatingPartial(modelBuilder);
     }
 

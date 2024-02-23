@@ -7,38 +7,37 @@ using Tgs.GameWagers.Repositories.Entities;
 
 #nullable disable
 
-namespace Tgs.GameWagers.Repositories.Entities.Configurations
+namespace Tgs.GameWagers.Repositories.Entities.Configurations;
+
+public partial class GameWagerDetailConfiguration : IEntityTypeConfiguration<GameWagerDetail>
 {
-    public partial class GameWagerDetailConfiguration : IEntityTypeConfiguration<GameWagerDetail>
+    public void Configure(EntityTypeBuilder<GameWagerDetail> entity)
     {
-        public void Configure(EntityTypeBuilder<GameWagerDetail> entity)
-        {
-            entity.HasKey(e => new { e.CreatedOn, e.WagerId }).HasName("pk_game_wager_details");
+        entity.HasKey(e => new { e.CreatedOn, e.WagerId }).HasName("pk_game_wager_details");
 
-            entity.ToTable("game_wager_details", "dbo");
+        entity.ToTable("game_wager_details", "dbo");
 
-            entity.HasIndex(e => e.WagerId, "ix_game_wager_details_wager_id");
+        entity.HasIndex(e => e.WagerId, "ix_game_wager_details_wager_id");
 
-            entity.Property(e => e.CreatedOn)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP")
-            .HasComment("創建時間")
-            .HasColumnName("created_on");
-            entity.Property(e => e.WagerId)
-            .HasComment("投注識別碼")
-            .HasColumnName("wager_id");
-            entity.Property(e => e.AdditionalData)
-            .HasDefaultValueSql("'{}'::jsonb")
-            .HasComment("附加數據")
-            .HasColumnType("jsonb")
-            .HasColumnName("additional_data");
-            entity.Property(e => e.UpdatedOn)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP")
-            .HasComment("修改時間")
-            .HasColumnName("updated_on");
+        entity.Property(e => e.CreatedOn)
+        .HasDefaultValueSql("CURRENT_TIMESTAMP")
+        .HasComment("創建時間")
+        .HasColumnName("created_on");
+        entity.Property(e => e.WagerId)
+        .HasComment("投注識別碼")
+        .HasColumnName("wager_id");
+        entity.Property(e => e.AdditionalData)
+        .HasDefaultValueSql("'{}'::jsonb")
+        .HasComment("附加數據")
+        .HasColumnType("jsonb")
+        .HasColumnName("additional_data");
+        entity.Property(e => e.UpdatedOn)
+        .HasDefaultValueSql("CURRENT_TIMESTAMP")
+        .HasComment("修改時間")
+        .HasColumnName("updated_on");
 
-            OnConfigurePartial(entity);
-        }
-
-        partial void OnConfigurePartial(EntityTypeBuilder<GameWagerDetail> entity);
+        OnConfigurePartial(entity);
     }
+
+    partial void OnConfigurePartial(EntityTypeBuilder<GameWagerDetail> entity);
 }

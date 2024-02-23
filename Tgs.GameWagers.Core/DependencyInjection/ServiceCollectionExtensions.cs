@@ -9,5 +9,6 @@ public static class ServiceCollectionExtensions
         => services
         .RegisterAllServiceUtilityTypes(
             Assembly.GetExecutingAssembly(),
-            ServiceLifetime.Transient);
+            ServiceLifetime.Transient)
+        .AddSingleton(TimeProvider.System);
 }

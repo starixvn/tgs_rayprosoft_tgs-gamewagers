@@ -73,5 +73,7 @@ public partial class Player
 
     public string? Birthday { get; set; }
 
+    public Guid? SnapshotEventId { get; set; }
+
     public virtual Brand Brand { get; set; } = null!;
 }

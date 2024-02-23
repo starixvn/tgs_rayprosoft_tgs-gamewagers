@@ -145,6 +145,52 @@ public class GameWagersClientUnitTest
             ?? Enumerable.Empty<BrandWagerPlayerStatsInfo>();
     }
 
+    [Fact]
+    public async Task Game_Wager_Stat_Ge_Player_Accum()
+    {
+        var playerCode = "4ucmqplxb029";
+
+
+
+        var web = CreateTestSettingSite(services =>
+        {
+            var fakeService = Substitute.For<IGetService<GameWagerStatPlayerAccumQuery, GameWagerStatPlayerAccumInfo>>();
+
+            var query = new GameWagerStatPlayerAccumQuery(
+                PlayerCode: playerCode);
+            var info = new GameWagerStatPlayerAccumInfo(
+                PlayerCode: playerCode,
+                Count: 100,
+                Bet: 10000,
+                ValidBet: 10000,
+                Settle: 20000,
+                Commission: 0,
+                Turnover: 10000,
+                WinLoss: 10000);
+
+            _ = fakeService.GetAsync(
+                query: Arg.Is(query),
+                cancellationToken: Arg.Any<CancellationToken>())
+            .Returns(info);
+
+            _ = services.AddSingleton(fakeService);
+        });
+        var httpClient = web.CreateClient();
+
+        var sut = new GameWagersClient(httpClient);
+
+        var actual = await sut.GameWagerStatGetPlayerAccumAsync(playerCode);
+
+        Assert.NotNull(actual);
+        Assert.Equal(100, actual.Count);
+        Assert.Equal(10000.00m, actual.Bet);
+        Assert.Equal(10000.00m, actual.ValidBet);
+        Assert.Equal(20000.00m, actual.Settle);
+        Assert.Equal(0.00m, actual.Commission);
+        Assert.Equal(10000.00m, actual.Turnover);
+        Assert.Equal(10000.00m, actual.WinLoss);
+    }
+
     private static WebApplicationFactory<Program> CreateTestSettingSite(Action<IServiceCollection>? configureServices = null)
         => new GameWagersClientServiceApplication(hostBuilder => _ = hostBuilder
             .ConfigureAppConfiguration((_, configBuilder) => configBuilder.Sources.Clear())

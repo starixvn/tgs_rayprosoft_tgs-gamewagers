@@ -7,51 +7,50 @@ using Tgs.GameWagers.Repositories.Entities;
 
 #nullable disable
 
-namespace Tgs.GameWagers.Repositories.Entities.Configurations
+namespace Tgs.GameWagers.Repositories.Entities.Configurations;
+
+public partial class ResellerConfiguration : IEntityTypeConfiguration<Reseller>
 {
-    public partial class ResellerConfiguration : IEntityTypeConfiguration<Reseller>
+    public void Configure(EntityTypeBuilder<Reseller> entity)
     {
-        public void Configure(EntityTypeBuilder<Reseller> entity)
-        {
-            entity.HasKey(e => e.Id).HasName("pk_resellers");
+        entity.HasKey(e => e.Id).HasName("pk_resellers");
 
-            entity.ToTable("resellers", "dbo");
+        entity.ToTable("resellers", "dbo");
 
-            entity.HasIndex(e => new { e.Code, e.Name, e.Description, e.OperationalEmail }, "ix_resellers_code_name_description_operational_email");
+        entity.HasIndex(e => new { e.Code, e.Name, e.Description, e.OperationalEmail }, "ix_resellers_code_name_description_operational_email");
 
-            entity.HasIndex(e => new { e.Code, e.Name, e.Description, e.OperationalEmail }, "ix_trgm_resellers_code_name_description_operational_email")
-            .HasMethod("gin")
-            .HasOperators(new[] { "gin_trgm_ops", "gin_trgm_ops", "gin_trgm_ops", "gin_trgm_ops" });
+        entity.HasIndex(e => new { e.Code, e.Name, e.Description, e.OperationalEmail }, "ix_trgm_resellers_code_name_description_operational_email")
+        .HasMethod("gin")
+        .HasOperators(new[] { "gin_trgm_ops", "gin_trgm_ops", "gin_trgm_ops", "gin_trgm_ops" });
 
-            entity.Property(e => e.Id)
-            .ValueGeneratedNever()
-            .HasColumnName("id");
-            entity.Property(e => e.BusinessType).HasColumnName("business_type");
-            entity.Property(e => e.Code)
-            .HasMaxLength(16)
-            .HasColumnName("code");
-            entity.Property(e => e.CreatedByUsername)
-            .HasMaxLength(32)
-            .HasColumnName("created_by_username");
-            entity.Property(e => e.CreatedOn).HasColumnName("created_on");
-            entity.Property(e => e.Description)
-            .HasMaxLength(256)
-            .HasColumnName("description");
-            entity.Property(e => e.Name)
-            .HasMaxLength(255)
-            .HasColumnName("name");
-            entity.Property(e => e.OperationalEmail)
-            .HasMaxLength(128)
-            .HasColumnName("operational_email");
-            entity.Property(e => e.Status).HasColumnName("status");
-            entity.Property(e => e.UpdatedByUsername)
-            .HasMaxLength(32)
-            .HasColumnName("updated_by_username");
-            entity.Property(e => e.UpdatedOn).HasColumnName("updated_on");
+        entity.Property(e => e.Id)
+        .ValueGeneratedNever()
+        .HasColumnName("id");
+        entity.Property(e => e.BusinessType).HasColumnName("business_type");
+        entity.Property(e => e.Code)
+        .HasMaxLength(16)
+        .HasColumnName("code");
+        entity.Property(e => e.CreatedByUsername)
+        .HasMaxLength(32)
+        .HasColumnName("created_by_username");
+        entity.Property(e => e.CreatedOn).HasColumnName("created_on");
+        entity.Property(e => e.Description)
+        .HasMaxLength(256)
+        .HasColumnName("description");
+        entity.Property(e => e.Name)
+        .HasMaxLength(255)
+        .HasColumnName("name");
+        entity.Property(e => e.OperationalEmail)
+        .HasMaxLength(128)
+        .HasColumnName("operational_email");
+        entity.Property(e => e.Status).HasColumnName("status");
+        entity.Property(e => e.UpdatedByUsername)
+        .HasMaxLength(32)
+        .HasColumnName("updated_by_username");
+        entity.Property(e => e.UpdatedOn).HasColumnName("updated_on");
 
-            OnConfigurePartial(entity);
-        }
-
-        partial void OnConfigurePartial(EntityTypeBuilder<Reseller> entity);
+        OnConfigurePartial(entity);
     }
+
+    partial void OnConfigurePartial(EntityTypeBuilder<Reseller> entity);
 }

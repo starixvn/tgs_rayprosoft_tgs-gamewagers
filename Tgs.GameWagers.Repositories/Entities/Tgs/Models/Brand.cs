@@ -95,6 +95,10 @@ public partial class Brand
 
     public int? TimeSpanMinutes { get; set; }
 
+    public bool EnablePlayerAgent { get; set; }
+
+    public bool EnablePlatformAccountFundCheck { get; set; }
+
     public virtual Licensee Licensee { get; set; } = null!;
 
     public virtual ICollection<Player> Players { get; set; } = new List<Player>();
