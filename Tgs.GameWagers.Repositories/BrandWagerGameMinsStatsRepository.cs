@@ -60,7 +60,8 @@ internal class BrandWagerGameMinsStatsRepository(IGameWagersMongoConnectionSetti
                  group.Sum(s => s.WinLoss)))
             .Sort(new BsonDocument(sort.ToString(), isAscending ? 1 : -1))
             .ToCursorAsync(
-            cancellationToken: cancellationToken);
+            cancellationToken: cancellationToken)
+			.ConfigureAwait(false);
 
         while (await aggregate
                    .MoveNextAsync(

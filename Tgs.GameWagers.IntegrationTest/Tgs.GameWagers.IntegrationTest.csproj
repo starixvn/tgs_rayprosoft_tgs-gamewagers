@@ -31,4 +31,12 @@
 	  <ProjectReference Include="..\Tgs.GameWagers\Tgs.GameWagers.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <EditorConfigFiles Remove="D:\00.Git\tgs-gamewagers\Tgs.GameWagers.IntegrationTest\.editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="D:\00.Git\tgs-gamewagers\Tgs.GameWagers.IntegrationTest\.editorconfig" />
+	</ItemGroup>
+
 </Project>

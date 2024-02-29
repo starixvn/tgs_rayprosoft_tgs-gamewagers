@@ -1,4 +1,4 @@
-﻿using Tgs.GameWagers.Domains.Enums;
+﻿using Tgs.GameWagers.Common.Enums;
 
 namespace Tgs.GameWagers.Core.Models;
 

@@ -23,7 +23,6 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
         var query = new GameWagerStatPlayerAccumQuery(
             "4ucmqplxb029");
 
-
         var currentTime = new DateTimeOffset(2024, 02, 23, 09, 30, 22, TimeSpan.FromHours(+08));
         _ = fakeTimeProvider.GetUtcNow()
             .Returns(currentTime);
@@ -110,7 +109,6 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
         var query = new GameWagerStatPlayerAccumQuery(
             "4ucmqplxb029");
 
-
         var currentTime = new DateTimeOffset(2024, 02, 23, 09, 30, 22, TimeSpan.FromHours(+08));
         _ = fakeTimeProvider.GetUtcNow()
             .Returns(currentTime);
@@ -188,7 +186,6 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
         var query = new GameWagerStatPlayerAccumQuery(
             "4ucmqplxb029");
 
-
         var currentTime = new DateTimeOffset(2024, 02, 23, 09, 30, 22, TimeSpan.FromHours(+08));
         _ = fakeTimeProvider.GetUtcNow()
             .Returns(currentTime);
@@ -256,7 +253,6 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 
         var query = new GameWagerStatPlayerAccumQuery(
             "4ucmqplxb029");
-
 
         var currentTime = new DateTimeOffset(2024, 02, 23, 09, 30, 22, TimeSpan.FromHours(+08));
         _ = fakeTimeProvider.GetUtcNow()

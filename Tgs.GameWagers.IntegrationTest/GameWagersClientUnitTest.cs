@@ -47,8 +47,7 @@ public class GameWagersClientUnitTest
 
         var sut = new GameWagersClient(httpClient);
 
-        _ = await sut
-            .BrandWagerGameStatsQueryAsync(
+        _ = await sut.BrandWagerGameStatsQueryAsync(
             brandCode: brandCode,
             startOn: startOn,
             endOn: endOn,
@@ -149,8 +148,6 @@ public class GameWagersClientUnitTest
     public async Task Game_Wager_Stat_Ge_Player_Accum()
     {
         var playerCode = "4ucmqplxb029";
-
-
 
         var web = CreateTestSettingSite(services =>
         {
