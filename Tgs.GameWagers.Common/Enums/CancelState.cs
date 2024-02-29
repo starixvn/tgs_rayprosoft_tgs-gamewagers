@@ -1,8 +1,9 @@
 ﻿namespace Tgs.GameWagers.Common.Enums;
+
 /// <summary>
-/// 重新结算狀態
+/// 取消狀態
 /// </summary>
-public enum ResettleStates
+public enum CancelState
 {
 	/// <summary>
 	/// The none
@@ -10,7 +11,7 @@ public enum ResettleStates
 	None = 0,
 
 	/// <summary>
-	/// The resettle
+	/// The cancel
 	/// </summary>
-	Resettle = 1
+	Cancel = 1
 }

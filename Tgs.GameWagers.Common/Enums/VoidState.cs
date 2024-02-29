@@ -1,8 +1,9 @@
 ﻿namespace Tgs.GameWagers.Common.Enums;
+
 /// <summary>
-/// 重置狀態
+/// 作廢狀態
 /// </summary>
-public enum ResetStates
+public enum VoidState
 {
 	/// <summary>
 	/// The none
@@ -10,7 +11,7 @@ public enum ResetStates
 	None = 0,
 
 	/// <summary>
-	/// The resettle
+	/// The void
 	/// </summary>
-	Reset = 1
+	Void = 1
 }

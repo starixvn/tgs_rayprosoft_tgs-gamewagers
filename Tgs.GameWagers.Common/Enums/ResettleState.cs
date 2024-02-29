@@ -1,8 +1,9 @@
 ﻿namespace Tgs.GameWagers.Common.Enums;
+
 /// <summary>
-/// 免費遊戲狀態
+/// 重新结算狀態
 /// </summary>
-public enum FreeGameStates
+public enum ResettleState
 {
 	/// <summary>
 	/// The none
@@ -10,7 +11,7 @@ public enum FreeGameStates
 	None = 0,
 
 	/// <summary>
-	/// The free game
+	/// The resettle
 	/// </summary>
-	FreeGame = 1
+	Resettle = 1
 }

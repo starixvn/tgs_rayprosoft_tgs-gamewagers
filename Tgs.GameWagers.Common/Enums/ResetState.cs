@@ -1,8 +1,9 @@
 ﻿namespace Tgs.GameWagers.Common.Enums;
+
 /// <summary>
-/// 關閉狀態
+/// 重置狀態
 /// </summary>
-public enum ClosedStates
+public enum ResetState
 {
 	/// <summary>
 	/// The none
@@ -10,7 +11,7 @@ public enum ClosedStates
 	None = 0,
 
 	/// <summary>
-	/// The closed
+	/// The resettle
 	/// </summary>
-	Closed = 1
+	Reset = 1
 }

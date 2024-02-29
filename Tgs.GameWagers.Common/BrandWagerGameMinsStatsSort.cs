@@ -2,11 +2,11 @@
 
 public enum BrandWagerGameMinsStatsSort
 {
-    Count = 0,
-    Bet,
-    ValidBet,
-    Settle,
-    Commission,
-    Turnover,
-    WinLoss
+	Count = 0,
+	Bet,
+	ValidBet,
+	Settle,
+	Commission,
+	Turnover,
+	WinLoss
 }

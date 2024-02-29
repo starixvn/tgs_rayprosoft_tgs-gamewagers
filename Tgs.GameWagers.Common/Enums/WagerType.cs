@@ -3,7 +3,7 @@
 /// <summary>
 /// 投注類型
 /// </summary>
-public enum WagerTypes
+public enum WagerType
 {
 	/// <summary>
 	/// The normal

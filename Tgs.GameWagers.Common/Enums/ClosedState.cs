@@ -1,8 +1,9 @@
 ﻿namespace Tgs.GameWagers.Common.Enums;
+
 /// <summary>
-/// 作廢狀態
+/// 關閉狀態
 /// </summary>
-public enum VoidStates
+public enum ClosedState
 {
 	/// <summary>
 	/// The none
@@ -10,7 +11,7 @@ public enum VoidStates
 	None = 0,
 
 	/// <summary>
-	/// The void
+	/// The closed
 	/// </summary>
-	Void = 1
+	Closed = 1
 }

@@ -3,7 +3,7 @@
 /// <summary>
 /// 投注狀態
 /// </summary>
-public enum WagerStates
+public enum WagerState
 {
 	/// <summary>
 	/// 等待中: 我們交易員因為可能因為賠率的轉換等因素，還未接受這張註單。

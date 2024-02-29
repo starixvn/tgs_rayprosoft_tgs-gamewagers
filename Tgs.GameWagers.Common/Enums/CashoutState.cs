@@ -1,8 +1,9 @@
 ﻿namespace Tgs.GameWagers.Common.Enums;
+
 /// <summary>
 /// 兌現狀態
 /// </summary>
-public enum CashoutStates
+public enum CashoutState
 {
 	/// <summary>
 	/// The none
