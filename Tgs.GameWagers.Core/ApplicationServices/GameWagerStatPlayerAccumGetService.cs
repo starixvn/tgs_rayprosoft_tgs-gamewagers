@@ -20,6 +20,8 @@ internal class GameWagerStatPlayerAccumGetService(
 			DateTime.Now.ToString("o"),
 			currentTime);
 
+		var currentTimeUTC8 = currentTime.ToOffset(TimeSpan.FromHours(+8));
+
 		var count = 0;
 		var bet = 0.0m;
 		var validBet = 0.0m;
@@ -28,8 +30,8 @@ internal class GameWagerStatPlayerAccumGetService(
 		var turnover = 0.0m;
 		var winLoss = 0.0m;
 
-		var minStartOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, 00, 00, currentTime.Offset);
-		var minEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, 00, currentTime.Offset);
+		var minStartOn = new DateTimeOffset(currentTimeUTC8.Year, currentTimeUTC8.Month, currentTimeUTC8.Day, currentTimeUTC8.Hour, 00, 00, currentTimeUTC8.Offset);
+		var minEndOn = new DateTimeOffset(currentTimeUTC8.Year, currentTimeUTC8.Month, currentTimeUTC8.Day, currentTimeUTC8.Hour, currentTimeUTC8.Minute, 00, currentTimeUTC8.Offset);
 
 		logger.LogInformation("LogOn:{logOn} MinStartOn:{minStartOn} MinEndOn:{minEndOn}",
 			DateTime.Now.ToString("o"),
@@ -58,8 +60,8 @@ internal class GameWagerStatPlayerAccumGetService(
 			winLoss += minStatPlayerAccumInfo?.WinLoss ?? 0;
 		}
 
-		var dateOn = DateOnly.FromDateTime(currentTime.Date);
-		var endTimeOn = TimeOnly.FromTimeSpan(TimeSpan.FromHours(currentTime.Hour));
+		var dateOn = DateOnly.FromDateTime(currentTimeUTC8.Date);
+		var endTimeOn = TimeOnly.FromTimeSpan(TimeSpan.FromHours(currentTimeUTC8.Hour));
 
 		logger.LogInformation("LogOn:{logOn} DateOn:{dateOn} EndTimeOn:{endTimeOn}",
 			DateTime.Now.ToString("o"),
@@ -90,7 +92,7 @@ internal class GameWagerStatPlayerAccumGetService(
 
 		var dailyStatPlayerAccumInfo = await statDailyCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
-			endDayOn: DateOnly.FromDateTime(currentTime.Date),
+			endDayOn: DateOnly.FromDateTime(currentTimeUTC8.Date),
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 
