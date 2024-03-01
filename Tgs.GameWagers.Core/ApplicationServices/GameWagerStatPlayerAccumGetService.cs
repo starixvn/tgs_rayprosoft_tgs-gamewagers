@@ -30,6 +30,12 @@ internal class GameWagerStatPlayerAccumGetService(
 
 		var minStartOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, 00, 00, currentTime.Offset);
 		var minEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, 00, currentTime.Offset);
+
+		logger.LogInformation("LogOn:{logOn} MinStartOn:{minStartOn} MinEndOn:{minEndOn}",
+			DateTime.Now.ToString("o"),
+			minStartOn,
+			minEndOn);
+
 		var minStatPlayerAccumInfo = await statCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
 			startOn: minStartOn,
@@ -54,6 +60,12 @@ internal class GameWagerStatPlayerAccumGetService(
 
 		var hourlyStartOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
 		var hourlyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, 00, 00, currentTime.Offset);
+
+		logger.LogInformation("LogOn:{logOn} HourlyStartOn:{hourlyStartOn} HourlyEndOn:{hourlyEndOn}",
+			DateTime.Now.ToString("o"),
+			hourlyStartOn,
+			hourlyEndOn);
+
 		var hourlyStatPlayerAccumInfo = await statHourlyCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
 			startOn: hourlyStartOn,
@@ -77,6 +89,11 @@ internal class GameWagerStatPlayerAccumGetService(
 		}
 
 		var dailyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
+
+		logger.LogInformation("LogOn:{logOn} DailyEndOn:{dailyEndOn}",
+			DateTime.Now.ToString("o"),
+			dailyEndOn);
+
 		var dailyStatPlayerAccumInfo = await statDailyCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
 			endOn: dailyEndOn,
