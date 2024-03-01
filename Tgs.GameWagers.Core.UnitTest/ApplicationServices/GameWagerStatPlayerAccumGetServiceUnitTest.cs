@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using NSubstitute;
 using Tgs.GameWagers.Core.ApplicationServices;
 using Tgs.GameWagers.Core.Models;
 
@@ -9,6 +10,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 	[Fact]
 	public async Task Normal_Process()
 	{
+		var fakeLog = NullLogger<GameWagerStatPlayerAccumGetService>.Instance;
 		var fakeTimeProvider = Substitute.For<TimeProvider>();
 		var fakeGameWagerStatCloseRepository = Substitute.For<IGameWagerStatCloseRepository>();
 		var fakeGameWagerStatHourlyCloseRepository = Substitute.For<IGameWagerStatHourlyCloseRepository>();
@@ -74,6 +76,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			.Returns(dailyStatPlayerAccumInfo);
 
 		var sut = new GameWagerStatPlayerAccumGetService(
+			fakeLog,
 			fakeTimeProvider,
 			fakeGameWagerStatCloseRepository,
 			fakeGameWagerStatHourlyCloseRepository,
@@ -94,6 +97,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 	[Fact]
 	public async Task Min_Is_Null()
 	{
+		var fakeLog = NullLogger<GameWagerStatPlayerAccumGetService>.Instance;
 		var fakeTimeProvider = Substitute.For<TimeProvider>();
 		var fakeGameWagerStatCloseRepository = Substitute.For<IGameWagerStatCloseRepository>();
 		var fakeGameWagerStatHourlyCloseRepository = Substitute.For<IGameWagerStatHourlyCloseRepository>();
@@ -150,6 +154,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			.Returns(dailyStatPlayerAccumInfo);
 
 		var sut = new GameWagerStatPlayerAccumGetService(
+			fakeLog,
 			fakeTimeProvider,
 			fakeGameWagerStatCloseRepository,
 			fakeGameWagerStatHourlyCloseRepository,
@@ -170,6 +175,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 	[Fact]
 	public async Task Min_Is_Null_And_Hourly_Is_Null()
 	{
+		var fakeLog = NullLogger<GameWagerStatPlayerAccumGetService>.Instance;
 		var fakeTimeProvider = Substitute.For<TimeProvider>();
 		var fakeGameWagerStatCloseRepository = Substitute.For<IGameWagerStatCloseRepository>();
 		var fakeGameWagerStatHourlyCloseRepository = Substitute.For<IGameWagerStatHourlyCloseRepository>();
@@ -217,6 +223,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			.Returns(dailyStatPlayerAccumInfo);
 
 		var sut = new GameWagerStatPlayerAccumGetService(
+			fakeLog,
 			fakeTimeProvider,
 			fakeGameWagerStatCloseRepository,
 			fakeGameWagerStatHourlyCloseRepository,
@@ -237,6 +244,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 	[Fact]
 	public async Task Min_Is_Null_And_Hourly_Is_Null_And_Daily_Is_Null()
 	{
+		var fakeLog = NullLogger<GameWagerStatPlayerAccumGetService>.Instance;
 		var fakeTimeProvider = Substitute.For<TimeProvider>();
 		var fakeGameWagerStatCloseRepository = Substitute.For<IGameWagerStatCloseRepository>();
 		var fakeGameWagerStatHourlyCloseRepository = Substitute.For<IGameWagerStatHourlyCloseRepository>();
@@ -275,6 +283,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			.Returns((GameWagerStatPlayerAccum?)null);
 
 		var sut = new GameWagerStatPlayerAccumGetService(
+			fakeLog,
 			fakeTimeProvider,
 			fakeGameWagerStatCloseRepository,
 			fakeGameWagerStatHourlyCloseRepository,
