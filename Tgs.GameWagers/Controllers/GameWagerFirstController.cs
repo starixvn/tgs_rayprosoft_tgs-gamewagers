@@ -51,60 +51,6 @@ public class GameWagerFirstController : ControllerBase
 		externalClosedEndOn: endOn,
 		cancellationToken: HttpContext.RequestAborted);
 
-	[HttpGet("{brand}/query/group/game", Name = "GameWagerFirst_Query_GroupBy_Game")]
-	public IAsyncEnumerable<GameWagerFirstGroupByGame> GameWagerFirstQueryGroupByGameAsync(
-		[FromServices] IGameWagerFirstRepository repository,
-		string brand,
-		[FromQuery] DateTimeOffset startOn,
-		[FromQuery] DateTimeOffset endOn,
-		[FromQuery] BrandWagerGameMinsStatsSort sort,
-		[FromQuery] bool isAscending,
-		[FromQuery] int pageIndex = 1,
-		[FromQuery] int pageSize = 20)
-		=> repository.QueryGroupByGameAsync(
-		brandCode: brand,
-		startOn: startOn,
-		endOn: endOn,
-		sort: sort,
-		isAscending: isAscending,
-		offset: pageIndex - 1,
-		limit: pageSize,
-		cancellationToken: HttpContext.RequestAborted);
-
-	[HttpGet("{brand}/query/group/player", Name = "GameWagerFirst_Query_GroupBy_player")]
-	public IAsyncEnumerable<GameWagerFirstGroupByPlayer> GameWagerFirstQueryGroupByPlayerAsync(
-		[FromServices] IGameWagerFirstRepository repository,
-		string brand,
-		[FromQuery] DateTimeOffset startOn,
-		[FromQuery] DateTimeOffset endOn,
-		[FromQuery] BrandWagerPlayerMinsStatsSort sort,
-		[FromQuery] bool isAscending,
-		[FromQuery] int pageIndex = 1,
-		[FromQuery] int pageSize = 20)
-		=> repository.QueryGroupByPlayerAsync(
-		brandCode: brand,
-		startOn: startOn,
-		endOn: endOn,
-		sort: sort,
-		isAscending: isAscending,
-		offset: pageIndex - 1,
-		limit: pageSize,
-		cancellationToken: HttpContext.RequestAborted);
-
-	[HttpGet("{brand}/query/filter/player/group/players", Name = "GameWagerFirst_Query_Filter_Player_GroupBy_Player")]
-	public IAsyncEnumerable<GameWagerFirstGroupByPlayer> GameWagerFirstQueryFilterPlayerGroupByPlayerAsync(
-		[FromServices] IGameWagerFirstRepository repository,
-		string brand,
-		[FromQuery] DateTimeOffset startOn,
-		[FromQuery] DateTimeOffset endOn,
-		[FromQuery] string[] playerCodes)
-		=> repository.QueryFilterPlayerGroupByPlayerAsync(
-		brandCode: brand,
-		startOn: startOn,
-		endOn: endOn,
-		playerCodes: playerCodes,
-		cancellationToken: HttpContext.RequestAborted);
-
 	[HttpGet("{gameProviderId:guid}/{gameId:int}/{walletId:guid}/{externalWagerId}", Name = "GameWagerFirst_GameProviderId_GameId_WalletId_ExternalWagerId_CreatedOn_Get")]
 	public async ValueTask<GameWagerFirstInfo?> GameWagerFirstGetAsync(
 		[FromServices] IGameWagerFirstRepository repository,
