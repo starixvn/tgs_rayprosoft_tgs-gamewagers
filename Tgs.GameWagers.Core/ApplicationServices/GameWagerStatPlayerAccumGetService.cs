@@ -22,6 +22,10 @@ internal class GameWagerStatPlayerAccumGetService(
 
 		var currentTimeUTC8 = currentTime.ToOffset(TimeSpan.FromHours(+8));
 
+		logger.LogInformation("LogOn:{logOn} CurrentTimeUTC8:{currentTimeUTC8}",
+			DateTime.Now.ToString("o"),
+			currentTimeUTC8);
+
 		var count = 0;
 		var bet = 0.0m;
 		var validBet = 0.0m;
@@ -90,9 +94,14 @@ internal class GameWagerStatPlayerAccumGetService(
 			winLoss += hourlyStatPlayerAccumInfo?.WinLoss ?? 0;
 		}
 
+		var endDayOn = DateOnly.FromDateTime(currentTimeUTC8.Date);
+		logger.LogInformation("LogOn:{logOn} EndDayOn:{endDayOn}",
+			DateTime.Now.ToString("o"),
+			endDayOn);
+
 		var dailyStatPlayerAccumInfo = await statDailyCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
-			endDayOn: DateOnly.FromDateTime(currentTimeUTC8.Date),
+			endDayOn: endDayOn,
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 
