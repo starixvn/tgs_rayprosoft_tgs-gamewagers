@@ -58,18 +58,18 @@ internal class GameWagerStatPlayerAccumGetService(
 			winLoss += minStatPlayerAccumInfo?.WinLoss ?? 0;
 		}
 
-		var hourlyStartOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
-		var hourlyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, 00, 00, currentTime.Offset);
+		var dateOn = DateOnly.FromDateTime(currentTime.Date);
+		var endTimeOn = TimeOnly.FromTimeSpan(TimeSpan.FromHours(currentTime.Hour));
 
-		logger.LogInformation("LogOn:{logOn} HourlyStartOn:{hourlyStartOn} HourlyEndOn:{hourlyEndOn}",
+		logger.LogInformation("LogOn:{logOn} DateOn:{dateOn} EndTimeOn:{endTimeOn}",
 			DateTime.Now.ToString("o"),
-			hourlyStartOn,
-			hourlyEndOn);
+			dateOn,
+			endTimeOn);
 
 		var hourlyStatPlayerAccumInfo = await statHourlyCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
-			startOn: hourlyStartOn,
-			endOn: hourlyEndOn,
+			dateOn: DateOnly.FromDateTime(currentTime.Date),
+			endTimeOn: TimeOnly.FromTimeSpan(TimeSpan.FromHours(currentTime.Hour)),
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 

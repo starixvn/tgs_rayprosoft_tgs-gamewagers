@@ -26,4 +26,22 @@ internal class GameWagerStatHourlyCloseRepository(
 		.FirstOrDefaultAsync(
 			cancellationToken: cancellationToken)
 		.ConfigureAwait(false);
+	public async ValueTask<GameWagerStatPlayerAccum?> GetPlayerAccumAsync(string playerCode, DateOnly dateOn, TimeOnly endTimeOn, CancellationToken cancellationToken = default)
+		=> await context.GameWagerStatHourlyCloses
+		.Where(predicate: stat => stat.StatDayOn == dateOn &&
+		stat.StatHourOn < endTimeOn &&
+		stat.PlayerCode == playerCode)
+		.GroupBy(keySelector: stat => stat.PlayerCode)
+		.Select(selector: stat => new GameWagerStatPlayerAccum(
+			stat.Key,
+			stat.Sum(sum => sum.Count),
+			stat.Sum(sum => sum.Bet),
+			stat.Sum(sum => sum.ValidBet),
+			stat.Sum(sum => sum.Settle),
+			stat.Sum(sum => sum.Commission),
+			stat.Sum(sum => sum.Turnover),
+			stat.Sum(sum => sum.WinLoss)))
+		.FirstOrDefaultAsync(
+			cancellationToken: cancellationToken)
+		.ConfigureAwait(false);
 }
