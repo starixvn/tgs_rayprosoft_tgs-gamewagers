@@ -8,9 +8,9 @@ namespace Tgs.GameWagers.Repositories;
 internal class GameWagerStatDailyCloseRepository(
 	TgsContext context) : IGameWagerStatDailyCloseRepository
 {
-	public async ValueTask<GameWagerStatPlayerAccum?> GetPlayerAccumAsync(string playerCode, DateTimeOffset endOn, CancellationToken cancellationToken = default)
+	public async ValueTask<GameWagerStatPlayerAccum?> GetPlayerAccumAsync(string playerCode, DateOnly endDayOn, CancellationToken cancellationToken = default)
 		=> await context.GameWagerStatDailyCloses
-		.Where(predicate: stat => stat.StatDayOn < DateOnly.FromDateTime(endOn.Date) &&
+		.Where(predicate: stat => stat.StatDayOn < endDayOn &&
 		stat.PlayerCode == playerCode)
 		.GroupBy(keySelector: stat => stat.PlayerCode)
 		.Select(selector: stat => new GameWagerStatPlayerAccum(

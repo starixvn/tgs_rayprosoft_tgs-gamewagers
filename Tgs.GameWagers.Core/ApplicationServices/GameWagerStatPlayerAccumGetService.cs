@@ -90,7 +90,7 @@ internal class GameWagerStatPlayerAccumGetService(
 
 		var dailyStatPlayerAccumInfo = await statDailyCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
-			endOn: currentTime,
+			endDayOn: DateOnly.FromDateTime(currentTime.Date),
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 
