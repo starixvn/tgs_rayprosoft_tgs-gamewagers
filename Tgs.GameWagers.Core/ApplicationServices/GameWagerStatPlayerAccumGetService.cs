@@ -1,9 +1,12 @@
-﻿using Tgs.GameWagers.Common;
+﻿using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using Tgs.GameWagers.Common;
 using Tgs.ServiceUtility;
 
 namespace Tgs.GameWagers.Core.ApplicationServices;
 
 internal class GameWagerStatPlayerAccumGetService(
+	ILogger<GameWagerStatPlayerAccumGetService> logger,
 	TimeProvider timeProvider,
 	IGameWagerStatCloseRepository statCloseRepository,
 	IGameWagerStatHourlyCloseRepository statHourlyCloseRepository,
@@ -12,6 +15,11 @@ internal class GameWagerStatPlayerAccumGetService(
 	public async ValueTask<GameWagerStatPlayerAccumInfo> GetAsync(GameWagerStatPlayerAccumQuery query, CancellationToken cancellationToken = default)
 	{
 		var currentTime = timeProvider.GetUtcNow();
+
+		logger.LogInformation("LogOn:{logOn} CurrentTime:{currentTime}",
+			DateTime.Now.ToString("o"),
+			currentTime);
+
 		var count = 0;
 		var bet = 0.0m;
 		var validBet = 0.0m;
@@ -28,6 +36,11 @@ internal class GameWagerStatPlayerAccumGetService(
 			endOn: minEndOn,
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
+
+		logger.LogInformation("LogOn:{logOn} MinStatPlayerAccumInfo:{minStatPlayerAccumInfo}",
+			DateTime.Now.ToString("o"),
+			JsonSerializer.Serialize(minStatPlayerAccumInfo));
+
 		if (minStatPlayerAccumInfo is not null)
 		{
 			count += minStatPlayerAccumInfo?.Count ?? 0;
@@ -47,6 +60,11 @@ internal class GameWagerStatPlayerAccumGetService(
 			endOn: hourlyEndOn,
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
+
+		logger.LogInformation("LogOn:{logOn} HourlyStatPlayerAccumInfo:{hourlyStatPlayerAccumInfo}",
+			DateTime.Now.ToString("o"),
+			JsonSerializer.Serialize(hourlyStatPlayerAccumInfo));
+
 		if (hourlyStatPlayerAccumInfo is not null)
 		{
 			count += hourlyStatPlayerAccumInfo?.Count ?? 0;
@@ -64,6 +82,11 @@ internal class GameWagerStatPlayerAccumGetService(
 			endOn: dailyEndOn,
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
+
+		logger.LogInformation("LogOn:{logOn} DailyStatPlayerAccumInfo:{dailyStatPlayerAccumInfo}",
+			DateTime.Now.ToString("o"),
+			JsonSerializer.Serialize(dailyStatPlayerAccumInfo));
+
 		if (dailyStatPlayerAccumInfo is not null)
 		{
 			count += dailyStatPlayerAccumInfo?.Count ?? 0;
@@ -74,6 +97,18 @@ internal class GameWagerStatPlayerAccumGetService(
 			turnover += dailyStatPlayerAccumInfo?.Turnover ?? 0;
 			winLoss += dailyStatPlayerAccumInfo?.WinLoss ?? 0;
 		}
+
+		logger.LogInformation("LogOn:{logOn} GameWagerStatPlayerAccumInfo:{gameWagerStatPlayerAccumInfo}",
+			DateTime.Now.ToString("o"),
+			JsonSerializer.Serialize(new GameWagerStatPlayerAccumInfo(
+				PlayerCode: query.PlayerCode,
+				Count: count,
+				Bet: bet,
+				ValidBet: validBet,
+				Settle: settle,
+				Commission: commission,
+				Turnover: turnover,
+				WinLoss: winLoss)));
 
 		return new GameWagerStatPlayerAccumInfo(
 			 PlayerCode: query.PlayerCode,
