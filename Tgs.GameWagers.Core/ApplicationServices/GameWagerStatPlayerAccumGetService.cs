@@ -88,15 +88,9 @@ internal class GameWagerStatPlayerAccumGetService(
 			winLoss += hourlyStatPlayerAccumInfo?.WinLoss ?? 0;
 		}
 
-		var dailyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
-
-		logger.LogInformation("LogOn:{logOn} DailyEndOn:{dailyEndOn}",
-			DateTime.Now.ToString("o"),
-			dailyEndOn);
-
 		var dailyStatPlayerAccumInfo = await statDailyCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
-			endOn: dailyEndOn,
+			endOn: currentTime,
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 

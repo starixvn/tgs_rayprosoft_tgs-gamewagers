@@ -59,7 +59,6 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns(hourlyStatPlayerAccumInfo);
 
-		var dailyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
 		var dailyStatPlayerAccumInfo = new GameWagerStatPlayerAccum(
 			query.PlayerCode,
 			100,
@@ -71,7 +70,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			10000);
 		_ = fakeGameWagerStatDailyCloseRepository.GetPlayerAccumAsync(
 			playerCode: Arg.Is(query.PlayerCode),
-			endOn: Arg.Is(dailyEndOn),
+			endOn: Arg.Is(currentTime),
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns(dailyStatPlayerAccumInfo);
 
@@ -137,7 +136,6 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns(hourlyStatPlayerAccumInfo);
 
-		var dailyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
 		var dailyStatPlayerAccumInfo = new GameWagerStatPlayerAccum(
 			query.PlayerCode,
 			100,
@@ -149,7 +147,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			10000);
 		_ = fakeGameWagerStatDailyCloseRepository.GetPlayerAccumAsync(
 			playerCode: Arg.Is(query.PlayerCode),
-			endOn: Arg.Is(dailyEndOn),
+			endOn: Arg.Is(currentTime),
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns(dailyStatPlayerAccumInfo);
 
@@ -206,7 +204,6 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns((GameWagerStatPlayerAccum?)null);
 
-		var dailyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
 		var dailyStatPlayerAccumInfo = new GameWagerStatPlayerAccum(
 			query.PlayerCode,
 			100,
@@ -218,7 +215,7 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			10000);
 		_ = fakeGameWagerStatDailyCloseRepository.GetPlayerAccumAsync(
 			playerCode: Arg.Is(query.PlayerCode),
-			endOn: Arg.Is(dailyEndOn),
+			endOn: Arg.Is(currentTime),
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns(dailyStatPlayerAccumInfo);
 
@@ -275,10 +272,9 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns((GameWagerStatPlayerAccum?)null);
 
-		var dailyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
 		_ = fakeGameWagerStatDailyCloseRepository.GetPlayerAccumAsync(
 			playerCode: Arg.Is(query.PlayerCode),
-			endOn: Arg.Is(dailyEndOn),
+			endOn: Arg.Is(currentTime),
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns((GameWagerStatPlayerAccum?)null);
 
