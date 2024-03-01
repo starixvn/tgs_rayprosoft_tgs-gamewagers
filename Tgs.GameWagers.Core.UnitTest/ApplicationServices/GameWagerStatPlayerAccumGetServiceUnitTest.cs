@@ -41,8 +41,8 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns(minStatPlayerAccumInfo);
 
-		var hourlyStartOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
-		var hourlyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, 00, 00, currentTime.Offset);
+		var dateOn = DateOnly.FromDateTime(currentTime.Date);
+		var endTimeOn = TimeOnly.FromTimeSpan(TimeSpan.FromHours(currentTime.Hour));
 		var hourlyStatPlayerAccumInfo = new GameWagerStatPlayerAccum(
 			query.PlayerCode,
 			10,
@@ -54,8 +54,8 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			-1000);
 		_ = fakeGameWagerStatHourlyCloseRepository.GetPlayerAccumAsync(
 			playerCode: Arg.Is(query.PlayerCode),
-			startOn: Arg.Is(hourlyStartOn),
-			endOn: Arg.Is(hourlyEndOn),
+			dateOn: Arg.Is(dateOn),
+			endTimeOn: Arg.Is(endTimeOn),
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns(hourlyStatPlayerAccumInfo);
 
@@ -118,8 +118,8 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns((GameWagerStatPlayerAccum?)null);
 
-		var hourlyStartOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
-		var hourlyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, 00, 00, currentTime.Offset);
+		var dateOn = DateOnly.FromDateTime(currentTime.Date);
+		var endTimeOn = TimeOnly.FromTimeSpan(TimeSpan.FromHours(currentTime.Hour));
 		var hourlyStatPlayerAccumInfo = new GameWagerStatPlayerAccum(
 			query.PlayerCode,
 			10,
@@ -131,8 +131,8 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			-1000);
 		_ = fakeGameWagerStatHourlyCloseRepository.GetPlayerAccumAsync(
 			playerCode: Arg.Is(query.PlayerCode),
-			startOn: Arg.Is(hourlyStartOn),
-			endOn: Arg.Is(hourlyEndOn),
+			dateOn: Arg.Is(dateOn),
+			endTimeOn: Arg.Is(endTimeOn),
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns(hourlyStatPlayerAccumInfo);
 
@@ -195,12 +195,12 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns((GameWagerStatPlayerAccum?)null);
 
-		var hourlyStartOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
-		var hourlyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, 00, 00, currentTime.Offset);
+		var dateOn = DateOnly.FromDateTime(currentTime.Date);
+		var endTimeOn = TimeOnly.FromTimeSpan(TimeSpan.FromHours(currentTime.Hour));
 		_ = fakeGameWagerStatHourlyCloseRepository.GetPlayerAccumAsync(
 			playerCode: Arg.Is(query.PlayerCode),
-			startOn: Arg.Is(hourlyStartOn),
-			endOn: Arg.Is(hourlyEndOn),
+			dateOn: Arg.Is(dateOn),
+			endTimeOn: Arg.Is(endTimeOn),
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns((GameWagerStatPlayerAccum?)null);
 
@@ -263,12 +263,12 @@ public class GameWagerStatPlayerAccumGetServiceUnitTest
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns((GameWagerStatPlayerAccum?)null);
 
-		var hourlyStartOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, 00, 00, 00, currentTime.Offset);
-		var hourlyEndOn = new DateTimeOffset(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, 00, 00, currentTime.Offset);
+		var dateOn = DateOnly.FromDateTime(currentTime.Date);
+		var endTimeOn = TimeOnly.FromTimeSpan(TimeSpan.FromHours(currentTime.Hour));
 		_ = fakeGameWagerStatHourlyCloseRepository.GetPlayerAccumAsync(
 			playerCode: Arg.Is(query.PlayerCode),
-			startOn: Arg.Is(hourlyStartOn),
-			endOn: Arg.Is(hourlyEndOn),
+			dateOn: Arg.Is(dateOn),
+			endTimeOn: Arg.Is(endTimeOn),
 			cancellationToken: Arg.Any<CancellationToken>())
 			.Returns((GameWagerStatPlayerAccum?)null);
 

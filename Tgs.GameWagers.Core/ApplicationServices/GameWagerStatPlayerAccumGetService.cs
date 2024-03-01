@@ -68,8 +68,8 @@ internal class GameWagerStatPlayerAccumGetService(
 
 		var hourlyStatPlayerAccumInfo = await statHourlyCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
-			dateOn: DateOnly.FromDateTime(currentTime.Date),
-			endTimeOn: TimeOnly.FromTimeSpan(TimeSpan.FromHours(currentTime.Hour)),
+			dateOn: dateOn,
+			endTimeOn: endTimeOn,
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 
