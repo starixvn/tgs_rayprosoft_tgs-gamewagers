@@ -10,7 +10,7 @@ internal class GameWagerStatDailyCloseRepository(
 {
 	public async ValueTask<GameWagerStatPlayerAccum?> GetPlayerAccumAsync(string playerCode, DateTimeOffset endOn, CancellationToken cancellationToken = default)
 		=> await context.GameWagerStatDailyCloses
-		.Where(predicate: stat => stat.StatOn < endOn &&
+		.Where(predicate: stat => stat.StatOn < endOn.UtcDateTime &&
 		stat.PlayerCode == playerCode)
 		.GroupBy(keySelector: stat => stat.PlayerCode)
 		.Select(selector: stat => new GameWagerStatPlayerAccum(
