@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tgs.GameWagers.Common;
-using Tgs.GameWagers.Core;
 using Tgs.GameWagers.Core.ApplicationServices;
-using Tgs.GameWagers.Core.Models;
 using Tgs.ServiceUtility;
 
 namespace Tgs.GameWagers.Controllers;

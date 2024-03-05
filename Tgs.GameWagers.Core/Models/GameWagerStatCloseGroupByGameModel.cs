@@ -1,13 +1,14 @@
 ﻿namespace Tgs.GameWagers.Core.Models;
-public record GameWagerStatCloseGroupByPlayer(
+public record GameWagerStatCloseGroupByGameModel(
+	Guid GameProviderId,
+	string GameProviderCode,
+	int GameId,
 	Guid ResellerId,
 	string ResellerCode,
 	Guid LicenseeId,
 	string LicenseeCode,
 	Guid BrandId,
 	string BrandCode,
-	string PlayerCode,
-	string Username,
 	string CurrencyCode,
 	int Count,
 	decimal Bet,

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tgs.GameWagers.Common;
+using Tgs.GameWagers.Common.Enums;
 using Tgs.GameWagers.Core;
 using Tgs.GameWagers.Core.Models;
 
@@ -32,7 +33,7 @@ public class BrandWagerGameMinsStatsController : ControllerBase
 			.ToArrayAsync(
 			cancellationToken: HttpContext.RequestAborted)
 			.ConfigureAwait(false)
-			?? Enumerable.Empty<GameWagerStatCloseGroupByGame>();
+			?? Enumerable.Empty<GameWagerStatCloseGroupByGameModel>();
 
 		if (!gameWagerStatCloseGroupByGames.Any())
 		{

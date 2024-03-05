@@ -2,7 +2,7 @@
 
 namespace Tgs.GameWagers.Core.Models;
 
-public record GameWager(
+public record GameWagerModel(
 	long WagerId,
 	Guid GameProviderId,
 	Guid GameProviderConfigurationId,
@@ -24,7 +24,6 @@ public record GameWager(
 	ResettleState ResettleState,
 	string ExternalRoundId,
 	string ExternalWagerId,
-	string ExternalGameId,
 	DateTimeOffset ExternalCreatedOn,
 	DateTimeOffset ExternalClosedOn,
 	DateTimeOffset ExternalPayoffOn,
@@ -36,7 +35,6 @@ public record GameWager(
 	decimal Commission,
 	decimal Turnover,
 	decimal WinLoss,
-	string AdditionalData,
 	DateTimeOffset CreatedOn,
 	DateTimeOffset ClosedOn,
 	DateTimeOffset UpdatedOn,

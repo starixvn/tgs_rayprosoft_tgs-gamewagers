@@ -32,7 +32,7 @@ public class BrandWagerPlayerMinsStatsController : ControllerBase
 			.ToArrayAsync(
 			cancellationToken: HttpContext.RequestAborted)
 			.ConfigureAwait(false)
-			?? Enumerable.Empty<GameWagerStatCloseGroupByPlayer>();
+			?? Enumerable.Empty<GameWagerStatCloseGroupByPlayerModel>();
 
 		if (!gameWagerStatCloseGroupByPlayers.Any())
 		{
@@ -78,7 +78,7 @@ public class BrandWagerPlayerMinsStatsController : ControllerBase
 			.ToArrayAsync(
 			cancellationToken: HttpContext.RequestAborted)
 			.ConfigureAwait(false)
-			?? Enumerable.Empty<GameWagerStatCloseGroupByPlayer>();
+			?? Enumerable.Empty<GameWagerStatCloseGroupByPlayerModel>();
 
 		if (!gameWagerStatCloseGroupByPlayers.Any())
 		{

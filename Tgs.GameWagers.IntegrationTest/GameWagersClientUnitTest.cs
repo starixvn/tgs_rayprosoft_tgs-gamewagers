@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Tgs.GameWagers.Common;
+using Tgs.GameWagers.Common.Enums;
 using Tgs.GameWagers.Core;
 using Tgs.GameWagers.Core.ApplicationServices;
 using Tgs.GameWagers.Core.Models;
@@ -36,7 +37,7 @@ public class GameWagersClientUnitTest
 				offset: Arg.Is(page - 1),
 				limit: Arg.Is(pageSize),
 				cancellationToken: Arg.Any<CancellationToken>())
-			.Returns(Enumerable.Empty<GameWagerStatCloseGroupByGame>().ToAsyncEnumerable());
+			.Returns(Enumerable.Empty<GameWagerStatCloseGroupByGameModel>().ToAsyncEnumerable());
 
 			_ = services.AddSingleton(fakeRepository);
 		}));
@@ -79,7 +80,7 @@ public class GameWagersClientUnitTest
 				offset: Arg.Is(page - 1),
 				limit: Arg.Is(pageSize),
 				cancellationToken: Arg.Any<CancellationToken>())
-			.Returns(Enumerable.Empty<GameWagerStatCloseGroupByPlayer>().ToAsyncEnumerable());
+			.Returns(Enumerable.Empty<GameWagerStatCloseGroupByPlayerModel>().ToAsyncEnumerable());
 
 			_ = services.AddSingleton(fakeRepository);
 		}));
@@ -117,7 +118,7 @@ public class GameWagersClientUnitTest
 				endOn: Arg.Is(endOn),
 				playerCodes: Arg.Is(playerCodes),
 				cancellationToken: Arg.Any<CancellationToken>())
-			.Returns(Enumerable.Empty<GameWagerStatCloseGroupByPlayer>().ToAsyncEnumerable());
+			.Returns(Enumerable.Empty<GameWagerStatCloseGroupByPlayerModel>().ToAsyncEnumerable());
 
 			_ = services.AddSingleton(fakeRepository);
 		}));

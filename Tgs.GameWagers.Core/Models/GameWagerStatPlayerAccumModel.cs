@@ -1,6 +1,6 @@
 ﻿namespace Tgs.GameWagers.Core.Models;
 
-public record GameWagerStatPlayerAccum(
+public record GameWagerStatPlayerAccumModel(
 	string PlayerCode,
 	int Count,
 	decimal Bet,

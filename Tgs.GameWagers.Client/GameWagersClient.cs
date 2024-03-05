@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Web;
 using Tgs.GameWagers.Common;
+using Tgs.GameWagers.Common.Enums;
 
 namespace Tgs.GameWagers.Client;
 

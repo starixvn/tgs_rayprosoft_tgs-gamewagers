@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using Tgs.GameWagers.Common;
+using Tgs.GameWagers.Common.Enums;
 using Tgs.GameWagers.Core;
 using Tgs.GameWagers.Core.Models;
 using Tgs.GameWagers.Repositories.Entities;
@@ -11,13 +11,13 @@ namespace Tgs.GameWagers.Repositories;
 internal class GameWagerStatCloseRepository(
 	TgsContext context) : IGameWagerStatCloseRepository
 {
-	public async ValueTask<GameWagerStatPlayerAccum?> GetPlayerAccumAsync(string playerCode, DateTimeOffset startOn, DateTimeOffset endOn, CancellationToken cancellationToken = default)
+	public async ValueTask<GameWagerStatPlayerAccumModel?> GetPlayerAccumAsync(string playerCode, DateTimeOffset startOn, DateTimeOffset endOn, CancellationToken cancellationToken = default)
 		=> await context.GameWagerStatCloses
 		.Where(predicate: stat => stat.StatOn >= startOn.UtcDateTime &&
 		stat.StatOn < endOn.UtcDateTime &&
 		stat.PlayerCode == playerCode)
 		.GroupBy(keySelector: stat => stat.PlayerCode)
-		.Select(selector: stat => new GameWagerStatPlayerAccum(
+		.Select(selector: stat => new GameWagerStatPlayerAccumModel(
 			stat.Key,
 			stat.Sum(sum => sum.Count),
 			stat.Sum(sum => sum.Bet),
@@ -29,7 +29,8 @@ internal class GameWagerStatCloseRepository(
 		.FirstOrDefaultAsync(
 			cancellationToken: cancellationToken)
 		.ConfigureAwait(false);
-	public async IAsyncEnumerable<GameWagerStatCloseGroupByPlayer> QueryFilterPlayerGroupByPlayerAsync(string brandCode, DateTimeOffset startOn, DateTimeOffset endOn, IEnumerable<string> playerCodes, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+
+	public async IAsyncEnumerable<GameWagerStatCloseGroupByPlayerModel> QueryFilterPlayerGroupByPlayerAsync(string brandCode, DateTimeOffset startOn, DateTimeOffset endOn, IEnumerable<string> playerCodes, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 	{
 		var list = await context.GameWagerStatCloses
 			.Join(
@@ -110,7 +111,7 @@ internal class GameWagerStatCloseRepository(
 				conform.Username,
 				conform.CurrencyCode,
 			})
-			.Select(selector: conform => new GameWagerStatCloseGroupByPlayer(
+			.Select(selector: conform => new GameWagerStatCloseGroupByPlayerModel(
 				conform.Key.ResellerId,
 				conform.Key.ResellerCode,
 				conform.Key.LicenseeId,
@@ -130,7 +131,7 @@ internal class GameWagerStatCloseRepository(
 			.ToArrayAsync(
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false)
-			?? Enumerable.Empty<GameWagerStatCloseGroupByPlayer>();
+			?? Enumerable.Empty<GameWagerStatCloseGroupByPlayerModel>();
 
 		if (!list.Any())
 		{
@@ -142,7 +143,8 @@ internal class GameWagerStatCloseRepository(
 			yield return item;
 		}
 	}
-	public async IAsyncEnumerable<GameWagerStatCloseGroupByGame> QueryGroupByGameAsync(string brandCode, DateTimeOffset startOn, DateTimeOffset endOn, BrandWagerGameMinsStatsSort sort, bool isAscending = true, int offset = 0, int limit = 20, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+
+	public async IAsyncEnumerable<GameWagerStatCloseGroupByGameModel> QueryGroupByGameAsync(string brandCode, DateTimeOffset startOn, DateTimeOffset endOn, BrandWagerGameMinsStatsSort sort, bool isAscending = true, int offset = 0, int limit = 20, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 	{
 		var query = context.GameWagerStatCloses
 			.Join(
@@ -241,7 +243,7 @@ internal class GameWagerStatCloseRepository(
 				conform.BrandCode,
 				conform.CurrencyCode,
 			})
-			.Select(selector: conform => new GameWagerStatCloseGroupByGame(
+			.Select(selector: conform => new GameWagerStatCloseGroupByGameModel(
 				conform.Key.GameProviderId,
 				conform.Key.GameProviderCode,
 				conform.Key.GameId,
@@ -290,7 +292,7 @@ internal class GameWagerStatCloseRepository(
 			.ToArrayAsync(
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false)
-			?? Enumerable.Empty<GameWagerStatCloseGroupByGame>();
+			?? Enumerable.Empty<GameWagerStatCloseGroupByGameModel>();
 
 		if (!list.Any())
 		{
@@ -302,7 +304,8 @@ internal class GameWagerStatCloseRepository(
 			yield return item;
 		}
 	}
-	public async IAsyncEnumerable<GameWagerStatCloseGroupByPlayer> QueryGroupByPlayerAsync(string brandCode, DateTimeOffset startOn, DateTimeOffset endOn, BrandWagerPlayerMinsStatsSort sort, bool isAscending = true, int offset = 0, int limit = 20, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+
+	public async IAsyncEnumerable<GameWagerStatCloseGroupByPlayerModel> QueryGroupByPlayerAsync(string brandCode, DateTimeOffset startOn, DateTimeOffset endOn, BrandWagerPlayerMinsStatsSort sort, bool isAscending = true, int offset = 0, int limit = 20, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 	{
 		var query = context.GameWagerStatCloses
 			.Join(
@@ -382,7 +385,7 @@ internal class GameWagerStatCloseRepository(
 				conform.Username,
 				conform.CurrencyCode,
 			})
-			.Select(selector: conform => new GameWagerStatCloseGroupByPlayer(
+			.Select(selector: conform => new GameWagerStatCloseGroupByPlayerModel(
 				conform.Key.ResellerId,
 				conform.Key.ResellerCode,
 				conform.Key.LicenseeId,
@@ -430,7 +433,7 @@ internal class GameWagerStatCloseRepository(
 			.ToArrayAsync(
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false)
-			?? Enumerable.Empty<GameWagerStatCloseGroupByPlayer>();
+			?? Enumerable.Empty<GameWagerStatCloseGroupByPlayerModel>();
 
 		if (!list.Any())
 		{

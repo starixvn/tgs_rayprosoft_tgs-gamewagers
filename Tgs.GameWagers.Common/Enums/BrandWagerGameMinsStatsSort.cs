@@ -1,4 +1,4 @@
-﻿namespace Tgs.GameWagers.Common;
+﻿namespace Tgs.GameWagers.Common.Enums;
 
 public enum BrandWagerGameMinsStatsSort
 {

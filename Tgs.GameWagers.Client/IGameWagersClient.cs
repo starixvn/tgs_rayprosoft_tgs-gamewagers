@@ -1,4 +1,5 @@
 ﻿using Tgs.GameWagers.Common;
+using Tgs.GameWagers.Common.Enums;
 
 namespace Tgs.GameWagers.Client;
 

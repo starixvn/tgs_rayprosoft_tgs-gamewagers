@@ -7,56 +7,57 @@ using Tgs.GameWagers.Repositories.Entities;
 
 #nullable disable
 
-namespace Tgs.GameWagers.Repositories.Entities.Configurations;
-
-public partial class LicenseeConfiguration : IEntityTypeConfiguration<Licensee>
+namespace Tgs.GameWagers.Repositories.Entities.Configurations
 {
-    public void Configure(EntityTypeBuilder<Licensee> entity)
+    public partial class LicenseeConfiguration : IEntityTypeConfiguration<Licensee>
     {
-        entity.HasKey(e => e.Id).HasName("pk_licensees");
+        public void Configure(EntityTypeBuilder<Licensee> entity)
+        {
+            entity.HasKey(e => e.Id).HasName("pk_licensees");
 
-        entity.ToTable("licensees", "dbo");
+            entity.ToTable("licensees", "dbo");
 
-        entity.HasIndex(e => new { e.Code, e.Name, e.Description, e.OperationalEmail }, "ix_licensees_code_name_description_operational_email");
+            entity.HasIndex(e => new { e.Code, e.Name, e.Description, e.OperationalEmail }, "ix_licensees_code_name_description_operational_email");
 
-        entity.HasIndex(e => e.ResellerId, "ix_licensees_reseller_id");
+            entity.HasIndex(e => e.ResellerId, "ix_licensees_reseller_id");
 
-        entity.HasIndex(e => new { e.Code, e.Name, e.Description, e.OperationalEmail }, "ix_trgm_licensees_code_name_description_operational_email")
-        .HasMethod("gin")
-        .HasOperators(new[] { "gin_trgm_ops", "gin_trgm_ops", "gin_trgm_ops", "gin_trgm_ops" });
+            entity.HasIndex(e => new { e.Code, e.Name, e.Description, e.OperationalEmail }, "ix_trgm_licensees_code_name_description_operational_email")
+            .HasMethod("gin")
+            .HasOperators(new[] { "gin_trgm_ops", "gin_trgm_ops", "gin_trgm_ops", "gin_trgm_ops" });
 
-        entity.Property(e => e.Id)
-        .ValueGeneratedNever()
-        .HasColumnName("id");
-        entity.Property(e => e.Code)
-        .HasMaxLength(16)
-        .HasColumnName("code");
-        entity.Property(e => e.CreatedByUsername)
-        .HasMaxLength(32)
-        .HasColumnName("created_by_username");
-        entity.Property(e => e.CreatedOn).HasColumnName("created_on");
-        entity.Property(e => e.Description)
-        .HasMaxLength(256)
-        .HasColumnName("description");
-        entity.Property(e => e.Name)
-        .HasMaxLength(255)
-        .HasColumnName("name");
-        entity.Property(e => e.OperationalEmail)
-        .HasMaxLength(128)
-        .HasColumnName("operational_email");
-        entity.Property(e => e.ResellerId).HasColumnName("reseller_id");
-        entity.Property(e => e.Status).HasColumnName("status");
-        entity.Property(e => e.UpdatedByUsername)
-        .HasMaxLength(32)
-        .HasColumnName("updated_by_username");
-        entity.Property(e => e.UpdatedOn).HasColumnName("updated_on");
+            entity.Property(e => e.Id)
+            .ValueGeneratedNever()
+            .HasColumnName("id");
+            entity.Property(e => e.Code)
+            .HasMaxLength(16)
+            .HasColumnName("code");
+            entity.Property(e => e.CreatedByUsername)
+            .HasMaxLength(32)
+            .HasColumnName("created_by_username");
+            entity.Property(e => e.CreatedOn).HasColumnName("created_on");
+            entity.Property(e => e.Description)
+            .HasMaxLength(256)
+            .HasColumnName("description");
+            entity.Property(e => e.Name)
+            .HasMaxLength(255)
+            .HasColumnName("name");
+            entity.Property(e => e.OperationalEmail)
+            .HasMaxLength(128)
+            .HasColumnName("operational_email");
+            entity.Property(e => e.ResellerId).HasColumnName("reseller_id");
+            entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.UpdatedByUsername)
+            .HasMaxLength(32)
+            .HasColumnName("updated_by_username");
+            entity.Property(e => e.UpdatedOn).HasColumnName("updated_on");
 
-        entity.HasOne(d => d.Reseller).WithMany(p => p.Licensees)
-        .HasForeignKey(d => d.ResellerId)
-        .HasConstraintName("fk_licensees_resellers_reseller_id");
+            entity.HasOne(d => d.Reseller).WithMany(p => p.Licensees)
+            .HasForeignKey(d => d.ResellerId)
+            .HasConstraintName("fk_licensees_resellers_reseller_id");
 
-        OnConfigurePartial(entity);
+            OnConfigurePartial(entity);
+        }
+
+        partial void OnConfigurePartial(EntityTypeBuilder<Licensee> entity);
     }
-
-    partial void OnConfigurePartial(EntityTypeBuilder<Licensee> entity);
 }

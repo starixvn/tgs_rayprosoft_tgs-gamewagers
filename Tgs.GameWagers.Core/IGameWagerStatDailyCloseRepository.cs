@@ -4,5 +4,5 @@ namespace Tgs.GameWagers.Core;
 
 public interface IGameWagerStatDailyCloseRepository
 {
-	ValueTask<GameWagerStatPlayerAccum?> GetPlayerAccumAsync(string playerCode, DateOnly endDayOn, CancellationToken cancellationToken = default);
+	ValueTask<GameWagerStatPlayerAccumModel?> GetPlayerAccumAsync(string playerCode, DateOnly endDayOn, CancellationToken cancellationToken = default);
 }

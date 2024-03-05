@@ -51,11 +51,6 @@ builder.Services.AddGameWagers(
 	{
 		var config = sp.GetRequiredService<IConfiguration>();
 		_ = dbBuilder.UseNpgsql(config.GetConnectionString("Tgs"));
-	},
-	(options, sp) =>
-	{
-		var configuration = sp.GetRequiredService<IConfiguration>();
-		options.ConnectionString = configuration.GetConnectionString("Mongo")!;
 	});
 
 builder.Services

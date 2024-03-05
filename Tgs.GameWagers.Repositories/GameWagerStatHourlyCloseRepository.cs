@@ -8,13 +8,13 @@ namespace Tgs.GameWagers.Repositories;
 internal class GameWagerStatHourlyCloseRepository(
 	TgsContext context) : IGameWagerStatHourlyCloseRepository
 {
-	public async ValueTask<GameWagerStatPlayerAccum?> GetPlayerAccumAsync(string playerCode, DateTimeOffset startOn, DateTimeOffset endOn, CancellationToken cancellationToken = default)
+	public async ValueTask<GameWagerStatPlayerAccumModel?> GetPlayerAccumAsync(string playerCode, DateTimeOffset startOn, DateTimeOffset endOn, CancellationToken cancellationToken = default)
 		=> await context.GameWagerStatHourlyCloses
 		.Where(predicate: stat => stat.StatOn >= startOn.UtcDateTime &&
 		stat.StatOn < endOn.UtcDateTime &&
 		stat.PlayerCode == playerCode)
 		.GroupBy(keySelector: stat => stat.PlayerCode)
-		.Select(selector: stat => new GameWagerStatPlayerAccum(
+		.Select(selector: stat => new GameWagerStatPlayerAccumModel(
 			stat.Key,
 			stat.Sum(sum => sum.Count),
 			stat.Sum(sum => sum.Bet),
@@ -26,13 +26,14 @@ internal class GameWagerStatHourlyCloseRepository(
 		.FirstOrDefaultAsync(
 			cancellationToken: cancellationToken)
 		.ConfigureAwait(false);
-	public async ValueTask<GameWagerStatPlayerAccum?> GetPlayerAccumAsync(string playerCode, DateOnly dateOn, TimeOnly endTimeOn, CancellationToken cancellationToken = default)
+
+	public async ValueTask<GameWagerStatPlayerAccumModel?> GetPlayerAccumAsync(string playerCode, DateOnly dateOn, TimeOnly endTimeOn, CancellationToken cancellationToken = default)
 		=> await context.GameWagerStatHourlyCloses
 		.Where(predicate: stat => stat.StatDayOn == dateOn &&
 		stat.StatHourOn < endTimeOn &&
 		stat.PlayerCode == playerCode)
 		.GroupBy(keySelector: stat => stat.PlayerCode)
-		.Select(selector: stat => new GameWagerStatPlayerAccum(
+		.Select(selector: stat => new GameWagerStatPlayerAccumModel(
 			stat.Key,
 			stat.Sum(sum => sum.Count),
 			stat.Sum(sum => sum.Bet),
