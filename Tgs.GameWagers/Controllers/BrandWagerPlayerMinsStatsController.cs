@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tgs.GameWagers.Common;
 using Tgs.GameWagers.Core;
-using Tgs.GameWagers.Core.ApplicationServices;
-using Tgs.ServiceUtility;
+using Tgs.GameWagers.Core.Models;
 
 namespace Tgs.GameWagers.Controllers;
 
@@ -12,7 +11,7 @@ public class BrandWagerPlayerMinsStatsController : ControllerBase
 {
 	[HttpGet("{brand}", Name = "BrandWagerPlayerMinsStats_Query")]
 	public async IAsyncEnumerable<BrandWagerPlayerStatsInfo> QueryAsync(
-		[FromServices] IQueryService<BrandWagerPlayerStatsQuery, BrandWagerPlayerStatsReslut> service,
+		[FromServices] IGameWagerStatCloseRepository repository,
 		string brand,
 		[FromQuery] DateTimeOffset startOn,
 		[FromQuery] DateTimeOffset endOn,
@@ -21,62 +20,90 @@ public class BrandWagerPlayerMinsStatsController : ControllerBase
 		[FromQuery] int page = 1,
 		[FromQuery] int pageSize = 1000)
 	{
-		var query = new BrandWagerPlayerStatsQuery(
-			BrandCode: brand,
-			StartOn: startOn,
-			EndOn: endOn,
-			Sort: sort,
-			IsAscending: isAscending,
-			Page: page,
-			PageSize: pageSize);
-		var resluts = await service
-			.QueryAsync(
-			query: query,
+		var gameWagerStatCloseGroupByPlayers = await repository.QueryGroupByPlayerAsync(
+			brandCode: brand,
+			startOn: startOn,
+			endOn: endOn,
+			sort: sort,
+			isAscending: isAscending,
+			offset: page - 1,
+			limit: pageSize,
 			cancellationToken: HttpContext.RequestAborted)
 			.ToArrayAsync(
 			cancellationToken: HttpContext.RequestAborted)
-			.ConfigureAwait(false);
+			.ConfigureAwait(false)
+			?? Enumerable.Empty<GameWagerStatCloseGroupByPlayer>();
 
-		if (resluts.Length == 0)
+		if (!gameWagerStatCloseGroupByPlayers.Any())
 		{
 			yield break;
 		}
 
-		foreach (var reslut in resluts)
+		foreach (var gameWagerStatCloseGroupByPlayer in gameWagerStatCloseGroupByPlayers)
 		{
 			yield return new BrandWagerPlayerStatsInfo(
-				ResellerId: reslut.ResellerId,
-				ResellerCode: reslut.ResellerCode,
-				LicenseeId: reslut.LicenseeId,
-				LicenseeCode: reslut.LicenseeCode,
-				BrandId: reslut.BrandId,
-				BrandCode: reslut.BrandCode,
-				PlayerCode: reslut.PlayerCode,
-				Username: reslut.Username,
-				CurrencyCode: reslut.CurrencyCode,
-				Count: reslut.Count,
-				Bet: reslut.Bet,
-				ValidBet: reslut.ValidBet,
-				Settle: reslut.Settle,
-				Commission: reslut.Commission,
-				Turnover: reslut.Turnover,
-				WinLoss: reslut.WinLoss
-				);
+				ResellerId: gameWagerStatCloseGroupByPlayer.ResellerId,
+				ResellerCode: gameWagerStatCloseGroupByPlayer.ResellerCode,
+				LicenseeId: gameWagerStatCloseGroupByPlayer.LicenseeId,
+				LicenseeCode: gameWagerStatCloseGroupByPlayer.LicenseeCode,
+				BrandId: gameWagerStatCloseGroupByPlayer.BrandId,
+				BrandCode: gameWagerStatCloseGroupByPlayer.BrandCode,
+				PlayerCode: gameWagerStatCloseGroupByPlayer.PlayerCode,
+				Username: gameWagerStatCloseGroupByPlayer.Username,
+				CurrencyCode: gameWagerStatCloseGroupByPlayer.CurrencyCode,
+				Count: gameWagerStatCloseGroupByPlayer.Count,
+				Bet: gameWagerStatCloseGroupByPlayer.Bet,
+				ValidBet: gameWagerStatCloseGroupByPlayer.ValidBet,
+				Settle: gameWagerStatCloseGroupByPlayer.Settle,
+				Commission: gameWagerStatCloseGroupByPlayer.Commission,
+				Turnover: gameWagerStatCloseGroupByPlayer.Turnover,
+				WinLoss: gameWagerStatCloseGroupByPlayer.WinLoss);
 		}
 	}
 
 	[HttpGet("{brand}/playerCodes", Name = "BrandWagerPlayerMinsStats_PlayerCodes_Query")]
-	public IAsyncEnumerable<BrandWagerPlayerStatsInfo> PlayerCodesQueryAsync(
-		[FromServices] IBrandWagerPlayerMinsStatsRepository repository,
+	public async IAsyncEnumerable<BrandWagerPlayerStatsInfo> PlayerCodesQueryAsync(
+		[FromServices] IGameWagerStatCloseRepository repository,
 		string brand,
 		[FromQuery] DateTimeOffset startOn,
 		[FromQuery] DateTimeOffset endOn,
 		[FromQuery] IEnumerable<string> playerCode)
-		=> repository
-		.PlayerCodesQueryAsync(
+	{
+		var gameWagerStatCloseGroupByPlayers = await repository.QueryFilterPlayerGroupByPlayerAsync(
 			brandCode: brand,
 			startOn: startOn,
 			endOn: endOn,
 			playerCodes: playerCode,
-			cancellationToken: HttpContext.RequestAborted);
+			cancellationToken: HttpContext.RequestAborted)
+			.ToArrayAsync(
+			cancellationToken: HttpContext.RequestAborted)
+			.ConfigureAwait(false)
+			?? Enumerable.Empty<GameWagerStatCloseGroupByPlayer>();
+
+		if (!gameWagerStatCloseGroupByPlayers.Any())
+		{
+			yield break;
+		}
+
+		foreach (var gameWagerStatCloseGroupByPlayer in gameWagerStatCloseGroupByPlayers)
+		{
+			yield return new BrandWagerPlayerStatsInfo(
+				ResellerId: gameWagerStatCloseGroupByPlayer.ResellerId,
+				ResellerCode: gameWagerStatCloseGroupByPlayer.ResellerCode,
+				LicenseeId: gameWagerStatCloseGroupByPlayer.LicenseeId,
+				LicenseeCode: gameWagerStatCloseGroupByPlayer.LicenseeCode,
+				BrandId: gameWagerStatCloseGroupByPlayer.BrandId,
+				BrandCode: gameWagerStatCloseGroupByPlayer.BrandCode,
+				PlayerCode: gameWagerStatCloseGroupByPlayer.PlayerCode,
+				Username: gameWagerStatCloseGroupByPlayer.Username,
+				CurrencyCode: gameWagerStatCloseGroupByPlayer.CurrencyCode,
+				Count: gameWagerStatCloseGroupByPlayer.Count,
+				Bet: gameWagerStatCloseGroupByPlayer.Bet,
+				ValidBet: gameWagerStatCloseGroupByPlayer.ValidBet,
+				Settle: gameWagerStatCloseGroupByPlayer.Settle,
+				Commission: gameWagerStatCloseGroupByPlayer.Commission,
+				Turnover: gameWagerStatCloseGroupByPlayer.Turnover,
+				WinLoss: gameWagerStatCloseGroupByPlayer.WinLoss);
+		}
+	}
 }
