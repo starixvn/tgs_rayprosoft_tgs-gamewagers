@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Tgs.GameWagers.Common;
 using Tgs.GameWagers.Core;
 using Tgs.GameWagers.Core.ApplicationServices;
+using Tgs.GameWagers.Core.Models;
+using Tgs.GameWagers.Repositories.Entities;
 using Tgs.ServiceUtility;
 using Tgs.VipLevelCommand.IntegrationTest;
 
@@ -23,22 +26,19 @@ public class GameWagersClientUnitTest
 
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
 		{
-			var fakeService = Substitute.For<IQueryService<BrandWagerGameStatsQuery, BrandWagerGameStatsReslut>>();
-			var query = new BrandWagerGameStatsQuery(
-				BrandCode: brandCode,
-				StartOn: startOn,
-				EndOn: endOn,
-				Sort: sort,
-				IsAscending: isAscending,
-				Page: page,
-				PageSize: pageSize);
-			_ = fakeService
-			.QueryAsync(
-				query: Arg.Is(query),
+			var fakeRepository = Substitute.For<IGameWagerStatCloseRepository>();
+			_ = fakeRepository.QueryGroupByGameAsync(
+				brandCode: Arg.Is(brandCode),
+				startOn: Arg.Is(startOn),
+				endOn: Arg.Is(endOn),
+				sort: Arg.Is(sort),
+				isAscending: Arg.Is(isAscending),
+				offset: Arg.Is(page - 1),
+				limit: Arg.Is(pageSize),
 				cancellationToken: Arg.Any<CancellationToken>())
-			.Returns(Enumerable.Empty<BrandWagerGameStatsReslut>().ToAsyncEnumerable());
+			.Returns(Enumerable.Empty<GameWagerStatCloseGroupByGame>().ToAsyncEnumerable());
 
-			_ = services.AddSingleton(fakeService);
+			_ = services.AddSingleton(fakeRepository);
 		}));
 		var httpClient = web.CreateClient();
 
@@ -69,23 +69,19 @@ public class GameWagersClientUnitTest
 
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
 		{
-			var fakeService = Substitute.For<IQueryService<BrandWagerPlayerStatsQuery, BrandWagerPlayerStatsReslut>>();
-
-			var query = new BrandWagerPlayerStatsQuery(
-				BrandCode: brandCode,
-				StartOn: startOn,
-				EndOn: endOn,
-				Sort: sort,
-				IsAscending: isAscending,
-				Page: page,
-				PageSize: pageSize);
-			_ = fakeService
-			.QueryAsync(
-				query: query,
+			var fakeRepository = Substitute.For<IGameWagerStatCloseRepository>();
+			_ = fakeRepository.QueryGroupByPlayerAsync(
+				brandCode: Arg.Is(brandCode),
+				startOn: Arg.Is(startOn),
+				endOn: Arg.Is(endOn),
+				sort: Arg.Is(sort),
+				isAscending: Arg.Is(isAscending),
+				offset: Arg.Is(page - 1),
+				limit: Arg.Is(pageSize),
 				cancellationToken: Arg.Any<CancellationToken>())
-			.Returns(Enumerable.Empty<BrandWagerPlayerStatsReslut>().ToAsyncEnumerable());
+			.Returns(Enumerable.Empty<GameWagerStatCloseGroupByPlayer>().ToAsyncEnumerable());
 
-			_ = services.AddSingleton(fakeService);
+			_ = services.AddSingleton(fakeRepository);
 		}));
 		var httpClient = web.CreateClient();
 
@@ -114,16 +110,14 @@ public class GameWagersClientUnitTest
 
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
 		{
-			var fakeRepository = Substitute.For<IBrandWagerPlayerMinsStatsRepository>();
-
-			_ = fakeRepository
-			.PlayerCodesQueryAsync(
+			var fakeRepository = Substitute.For<IGameWagerStatCloseRepository>();
+			_ = fakeRepository.QueryFilterPlayerGroupByPlayerAsync(
 				brandCode: Arg.Is(brandCode),
 				startOn: Arg.Is(startOn),
 				endOn: Arg.Is(endOn),
 				playerCodes: Arg.Is(playerCodes),
 				cancellationToken: Arg.Any<CancellationToken>())
-			.Returns(Enumerable.Empty<BrandWagerPlayerStatsInfo>().ToAsyncEnumerable());
+			.Returns(Enumerable.Empty<GameWagerStatCloseGroupByPlayer>().ToAsyncEnumerable());
 
 			_ = services.AddSingleton(fakeRepository);
 		}));
