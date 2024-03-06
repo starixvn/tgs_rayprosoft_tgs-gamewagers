@@ -26,6 +26,8 @@ public partial class TgsContext : DbContext
 
     public virtual DbSet<GameWagerFirst> GameWagerFirsts { get; set; }
 
+    public virtual DbSet<GameWagerPlayerAccum> GameWagerPlayerAccums { get; set; }
+
     public virtual DbSet<GameWagerStatClose> GameWagerStatCloses { get; set; }
 
     public virtual DbSet<GameWagerStatDailyClose> GameWagerStatDailyCloses { get; set; }
@@ -57,6 +59,7 @@ public partial class TgsContext : DbContext
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerDetailConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerFirstConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameWagerPlayerAccumConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatCloseConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatDailyCloseConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatDailyZoneCloseConfiguration());

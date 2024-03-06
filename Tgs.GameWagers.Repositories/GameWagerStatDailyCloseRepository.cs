@@ -25,4 +25,23 @@ internal class GameWagerStatDailyCloseRepository(
 		.FirstOrDefaultAsync(
 			cancellationToken: cancellationToken)
 		.ConfigureAwait(false);
+
+	public async ValueTask<GameWagerStatPlayerAccumModel?> GetPlayerAccumAsync(string playerCode, DateOnly startDayOn, DateOnly endDayOn, CancellationToken cancellationToken = default)
+		=> await context.GameWagerStatDailyCloses
+		.Where(predicate: stat => stat.StatDayOn >= startDayOn &&
+		stat.StatDayOn < endDayOn &&
+		stat.PlayerCode == playerCode)
+		.GroupBy(keySelector: stat => stat.PlayerCode)
+		.Select(selector: stat => new GameWagerStatPlayerAccumModel(
+			stat.Key,
+			stat.Sum(sum => sum.Count),
+			stat.Sum(sum => sum.Bet),
+			stat.Sum(sum => sum.ValidBet),
+			stat.Sum(sum => sum.Settle),
+			stat.Sum(sum => sum.Commission),
+			stat.Sum(sum => sum.Turnover),
+			stat.Sum(sum => sum.WinLoss)))
+		.FirstOrDefaultAsync(
+			cancellationToken: cancellationToken)
+		.ConfigureAwait(false);
 }

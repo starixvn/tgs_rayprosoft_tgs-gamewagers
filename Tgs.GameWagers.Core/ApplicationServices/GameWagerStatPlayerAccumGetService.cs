@@ -8,6 +8,7 @@ namespace Tgs.GameWagers.Core.ApplicationServices;
 internal class GameWagerStatPlayerAccumGetService(
 	ILogger<GameWagerStatPlayerAccumGetService> logger,
 	TimeProvider timeProvider,
+	IGameWagerPlayerAccumRepository gameWagerPlayerAccumRepository,
 	IGameWagerStatCloseRepository statCloseRepository,
 	IGameWagerStatHourlyCloseRepository statHourlyCloseRepository,
 	IGameWagerStatDailyCloseRepository statDailyCloseRepository) : IGetService<GameWagerStatPlayerAccumQuery, GameWagerStatPlayerAccumInfo>
@@ -34,6 +35,25 @@ internal class GameWagerStatPlayerAccumGetService(
 		var turnover = 0.0m;
 		var winLoss = 0.0m;
 
+		var gameWagerPlayerAccum = await gameWagerPlayerAccumRepository.GetNewestAsync(
+			playerCode: query.PlayerCode,
+			cancellationToken: cancellationToken)
+			.ConfigureAwait(false);
+
+		var accumOn = DateTimeOffset.UnixEpoch;
+
+		if (gameWagerPlayerAccum is not null)
+		{
+			accumOn = gameWagerPlayerAccum.AccumOn;
+			count += gameWagerPlayerAccum.Count;
+			bet += gameWagerPlayerAccum.Bet;
+			validBet += gameWagerPlayerAccum.ValidBet;
+			settle += gameWagerPlayerAccum.Settle;
+			commission += gameWagerPlayerAccum.Commission;
+			turnover += gameWagerPlayerAccum.Turnover;
+			winLoss += gameWagerPlayerAccum.WinLoss;
+		}
+
 		var minStartOn = new DateTimeOffset(currentTimeUTC8.Year, currentTimeUTC8.Month, currentTimeUTC8.Day, currentTimeUTC8.Hour, 00, 00, currentTimeUTC8.Offset);
 		var minEndOn = new DateTimeOffset(currentTimeUTC8.Year, currentTimeUTC8.Month, currentTimeUTC8.Day, currentTimeUTC8.Hour, currentTimeUTC8.Minute, 00, currentTimeUTC8.Offset);
 
@@ -42,7 +62,7 @@ internal class GameWagerStatPlayerAccumGetService(
 			minStartOn,
 			minEndOn);
 
-		var minStatPlayerAccumInfo = await statCloseRepository.GetPlayerAccumAsync(
+		var gameWagerStatPlayerAccumMin = await statCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
 			startOn: minStartOn,
 			endOn: minEndOn,
@@ -51,17 +71,17 @@ internal class GameWagerStatPlayerAccumGetService(
 
 		logger.LogInformation("LogOn:{logOn} MinStatPlayerAccumInfo:{minStatPlayerAccumInfo}",
 			DateTime.Now.ToString("o"),
-			JsonSerializer.Serialize(minStatPlayerAccumInfo));
+			JsonSerializer.Serialize(gameWagerStatPlayerAccumMin));
 
-		if (minStatPlayerAccumInfo is not null)
+		if (gameWagerStatPlayerAccumMin is not null)
 		{
-			count += minStatPlayerAccumInfo?.Count ?? 0;
-			bet += minStatPlayerAccumInfo?.Bet ?? 0;
-			validBet += minStatPlayerAccumInfo?.ValidBet ?? 0;
-			settle += minStatPlayerAccumInfo?.Settle ?? 0;
-			commission += minStatPlayerAccumInfo?.Commission ?? 0;
-			turnover += minStatPlayerAccumInfo?.Turnover ?? 0;
-			winLoss += minStatPlayerAccumInfo?.WinLoss ?? 0;
+			count += gameWagerStatPlayerAccumMin.Count;
+			bet += gameWagerStatPlayerAccumMin.Bet;
+			validBet += gameWagerStatPlayerAccumMin.ValidBet;
+			settle += gameWagerStatPlayerAccumMin.Settle;
+			commission += gameWagerStatPlayerAccumMin.Commission;
+			turnover += gameWagerStatPlayerAccumMin.Turnover;
+			winLoss += gameWagerStatPlayerAccumMin.WinLoss;
 		}
 
 		var dateOn = DateOnly.FromDateTime(currentTimeUTC8.Date);
@@ -72,7 +92,7 @@ internal class GameWagerStatPlayerAccumGetService(
 			dateOn,
 			endTimeOn);
 
-		var hourlyStatPlayerAccumInfo = await statHourlyCloseRepository.GetPlayerAccumAsync(
+		var gameWagerStatPlayerAccumHourly = await statHourlyCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
 			dateOn: dateOn,
 			endTimeOn: endTimeOn,
@@ -81,43 +101,46 @@ internal class GameWagerStatPlayerAccumGetService(
 
 		logger.LogInformation("LogOn:{logOn} HourlyStatPlayerAccumInfo:{hourlyStatPlayerAccumInfo}",
 			DateTime.Now.ToString("o"),
-			JsonSerializer.Serialize(hourlyStatPlayerAccumInfo));
+			JsonSerializer.Serialize(gameWagerStatPlayerAccumHourly));
 
-		if (hourlyStatPlayerAccumInfo is not null)
+		if (gameWagerStatPlayerAccumHourly is not null)
 		{
-			count += hourlyStatPlayerAccumInfo?.Count ?? 0;
-			bet += hourlyStatPlayerAccumInfo?.Bet ?? 0;
-			validBet += hourlyStatPlayerAccumInfo?.ValidBet ?? 0;
-			settle += hourlyStatPlayerAccumInfo?.Settle ?? 0;
-			commission += hourlyStatPlayerAccumInfo?.Commission ?? 0;
-			turnover += hourlyStatPlayerAccumInfo?.Turnover ?? 0;
-			winLoss += hourlyStatPlayerAccumInfo?.WinLoss ?? 0;
+			count += gameWagerStatPlayerAccumHourly.Count;
+			bet += gameWagerStatPlayerAccumHourly.Bet;
+			validBet += gameWagerStatPlayerAccumHourly.ValidBet;
+			settle += gameWagerStatPlayerAccumHourly.Settle;
+			commission += gameWagerStatPlayerAccumHourly.Commission;
+			turnover += gameWagerStatPlayerAccumHourly.Turnover;
+			winLoss += gameWagerStatPlayerAccumHourly.WinLoss;
 		}
 
+		var startDayOn = DateOnly.FromDateTime(accumOn.ToOffset(TimeSpan.FromHours(+8)).Date);
 		var endDayOn = DateOnly.FromDateTime(currentTimeUTC8.Date);
-		logger.LogInformation("LogOn:{logOn} EndDayOn:{endDayOn}",
+		logger.LogInformation("LogOn:{logOn} StartDayOn:{startDayOn} EndDayOn:{endDayOn}",
 			DateTime.Now.ToString("o"),
+			startDayOn,
 			endDayOn);
 
-		var dailyStatPlayerAccumInfo = await statDailyCloseRepository.GetPlayerAccumAsync(
+		var gameWagerStatPlayerAccumDaily = await statDailyCloseRepository.GetPlayerAccumAsync(
 			playerCode: query.PlayerCode,
+			startDayOn: startDayOn,
 			endDayOn: endDayOn,
 			cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 
 		logger.LogInformation("LogOn:{logOn} DailyStatPlayerAccumInfo:{dailyStatPlayerAccumInfo}",
 			DateTime.Now.ToString("o"),
-			JsonSerializer.Serialize(dailyStatPlayerAccumInfo));
+			JsonSerializer.Serialize(gameWagerStatPlayerAccumDaily));
 
-		if (dailyStatPlayerAccumInfo is not null)
+		if (gameWagerStatPlayerAccumDaily is not null)
 		{
-			count += dailyStatPlayerAccumInfo?.Count ?? 0;
-			bet += dailyStatPlayerAccumInfo?.Bet ?? 0;
-			validBet += dailyStatPlayerAccumInfo?.ValidBet ?? 0;
-			settle += dailyStatPlayerAccumInfo?.Settle ?? 0;
-			commission += dailyStatPlayerAccumInfo?.Commission ?? 0;
-			turnover += dailyStatPlayerAccumInfo?.Turnover ?? 0;
-			winLoss += dailyStatPlayerAccumInfo?.WinLoss ?? 0;
+			count += gameWagerStatPlayerAccumDaily.Count;
+			bet += gameWagerStatPlayerAccumDaily.Bet;
+			validBet += gameWagerStatPlayerAccumDaily.ValidBet;
+			settle += gameWagerStatPlayerAccumDaily.Settle;
+			commission += gameWagerStatPlayerAccumDaily.Commission;
+			turnover += gameWagerStatPlayerAccumDaily.Turnover;
+			winLoss += gameWagerStatPlayerAccumDaily.WinLoss;
 		}
 
 		logger.LogInformation("LogOn:{logOn} GameWagerStatPlayerAccumInfo:{gameWagerStatPlayerAccumInfo}",
