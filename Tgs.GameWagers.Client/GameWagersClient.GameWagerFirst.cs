@@ -6,12 +6,12 @@ namespace Tgs.GameWagers.Client;
 
 internal partial class GameWagersClient
 {
-	public async ValueTask<GameWagerFirstInfo?> GetAsync(long wagerId, DateTimeOffset createdOn, CancellationToken cancellationToken = default)
+	public async ValueTask<GameWagerFirstInfo?> GameWagerFirstGetAsync(long wagerId, DateTimeOffset createdOn, CancellationToken cancellationToken = default)
 	{
 		var path = new Uri(_httpClient.BaseAddress!, $"/game-wager-first/{wagerId}");
 		var builder = new UriBuilder(path);
 		var query = HttpUtility.ParseQueryString(builder.Query);
-		query["createdOn"] = createdOn.ToString("O");
+		query["createdOn"] = createdOn.ToString("u");
 
 		builder.Query = query.ToString();
 		string url = builder.ToString();
@@ -27,12 +27,12 @@ internal partial class GameWagersClient
 			.ConfigureAwait(false);
 	}
 
-	public async ValueTask<GameWagerFirstInfo?> GetAsync(Guid gameProviderId, int gameId, Guid walletId, string externalWagerId, DateTimeOffset createdOn, CancellationToken cancellationToken = default)
+	public async ValueTask<GameWagerFirstInfo?> GameWagerFirstGetAsync(Guid gameProviderId, int gameId, Guid walletId, string externalWagerId, DateTimeOffset createdOn, CancellationToken cancellationToken = default)
 	{
 		var path = new Uri(_httpClient.BaseAddress!, $"/game-wager-first/{gameProviderId}/{gameId}/{walletId}/{externalWagerId}");
 		var builder = new UriBuilder(path);
 		var query = HttpUtility.ParseQueryString(builder.Query);
-		query["createdOn"] = createdOn.ToString("O");
+		query["createdOn"] = createdOn.ToString("u");
 
 		builder.Query = query.ToString();
 		string url = builder.ToString();

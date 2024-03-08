@@ -13,7 +13,7 @@ public class GameWagerFirstUnitTest
 	public async Task GameWagerFirst_WagerId_CreatedOn_Get()
 	{
 		var wagerId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-		var createdOn = DateTimeOffset.Parse("2024-02-27T16:29:10.681+08:00");
+		var createdOn = DateTimeOffset.Parse("2024-02-27T16:29:10+08:00");
 
 		var result = new GameWagerFirstModel(
 			WagerId: wagerId,
@@ -68,7 +68,7 @@ public class GameWagerFirstUnitTest
 
 		var client = new GameWagersClient(httpClient);
 
-		var actual = await client.GetAsync(wagerId: wagerId, createdOn: createdOn);
+		var actual = await client.GameWagerFirstGetAsync(wagerId: wagerId, createdOn: createdOn);
 
 		Assert.NotNull(actual);
 		Assert.Equal(result.WagerId, actual.WagerId);
@@ -130,7 +130,7 @@ public class GameWagerFirstUnitTest
 
 		var client = new GameWagersClient(httpClient);
 
-		var actual = await client.GetAsync(wagerId: wagerId, createdOn: createdOn);
+		var actual = await client.GameWagerFirstGetAsync(wagerId: wagerId, createdOn: createdOn);
 
 		Assert.Null(actual);
 	}
@@ -142,7 +142,7 @@ public class GameWagerFirstUnitTest
 		var gameId = 1;
 		var walletId = Guid.NewGuid();
 		var externalWagerId = "PG-1762394359405350912";
-		var createdOn = DateTimeOffset.Parse("2024-02-27T16:29:10.681+08:00");
+		var createdOn = DateTimeOffset.Parse("2024-02-27T16:29:10+08:00");
 
 		var result = new GameWagerFirstModel(
 			WagerId: DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
@@ -200,7 +200,7 @@ public class GameWagerFirstUnitTest
 
 		var client = new GameWagersClient(httpClient);
 
-		var actual = await client.GetAsync(gameProviderId: gameProviderId, gameId: gameId, walletId: walletId, externalWagerId: externalWagerId, createdOn: createdOn);
+		var actual = await client.GameWagerFirstGetAsync(gameProviderId: gameProviderId, gameId: gameId, walletId: walletId, externalWagerId: externalWagerId, createdOn: createdOn);
 
 		Assert.NotNull(actual);
 		Assert.Equal(result.WagerId, actual.WagerId);
@@ -268,7 +268,7 @@ public class GameWagerFirstUnitTest
 
 		var client = new GameWagersClient(httpClient);
 
-		var actual = await client.GetAsync(gameProviderId: gameProviderId, gameId: gameId, walletId: walletId, externalWagerId: externalWagerId, createdOn: createdOn);
+		var actual = await client.GameWagerFirstGetAsync(gameProviderId: gameProviderId, gameId: gameId, walletId: walletId, externalWagerId: externalWagerId, createdOn: createdOn);
 
 		Assert.Null(actual);
 	}
