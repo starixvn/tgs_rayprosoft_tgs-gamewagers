@@ -38,6 +38,8 @@ public partial class TgsContext : DbContext
 
     public virtual DbSet<GameWagerStatHourlyZoneClose> GameWagerStatHourlyZoneCloses { get; set; }
 
+    public virtual DbSet<GameWagersEventSource> GameWagersEventSources { get; set; }
+
     public virtual DbSet<Licensee> Licensees { get; set; }
 
     public virtual DbSet<Player> Players { get; set; }
@@ -65,6 +67,7 @@ public partial class TgsContext : DbContext
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatDailyZoneCloseConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatHourlyCloseConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatHourlyZoneCloseConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameWagersEventSourceConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.LicenseeConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.PlayerConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.ResellerConfiguration());

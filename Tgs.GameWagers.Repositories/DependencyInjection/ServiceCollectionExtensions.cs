@@ -19,5 +19,6 @@ public static class ServiceCollectionExtensions
 		.AddTransient<IGameWagerPlayerAccumRepository, GameWagerPlayerAccumRepository>()
 		.AddTransient<IGameWagerStatCloseRepository, GameWagerStatCloseRepository>()
 		.AddTransient<IGameWagerStatHourlyCloseRepository, GameWagerStatHourlyCloseRepository>()
-		.AddTransient<IGameWagerStatDailyCloseRepository, GameWagerStatDailyCloseRepository>();
+		.AddTransient<IGameWagerStatDailyCloseRepository, GameWagerStatDailyCloseRepository>()
+		.AddTransient<IGameWagersEventSourceRepository, GameWagersEventSourceRepository>();
 }

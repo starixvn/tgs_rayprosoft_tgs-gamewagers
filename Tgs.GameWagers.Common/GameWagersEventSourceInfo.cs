@@ -1,0 +1,36 @@
+﻿using System.Text.Json.Nodes;
+using Tgs.GameWagers.Common.Enums;
+
+namespace Tgs.GameWagers.Common;
+public record GameWagersEventSourceInfo(
+	Guid Id,
+	DateTimeOffset CreatedOn ,
+	Guid GameProviderId ,
+	Guid GameProviderConfigurationId ,
+	int GameId,
+	Guid ResellerId,
+	Guid LicenseeId ,
+	Guid BrandId ,
+	string PlayerCode,
+	string CurrencyCode ,
+	Guid WalletId ,
+	WagerState WagerState,
+	WagerType WagerType,
+	FreeGameState FreeGameState ,
+	GambleState GambleState ,
+	CashoutState CashoutState ,
+	ResettleState ResettleState ,
+	string ExternalRoundId ,
+	string ExternalWagerId,
+	DateTimeOffset ExternalCreatedOn ,
+	DateTimeOffset ExternalClosedOn ,
+	DateTimeOffset ExternalPayoffOn ,
+	DateTimeOffset ExternalResettleOn ,
+	decimal CurrencyRatio,
+	decimal Bet ,
+	decimal ValidBet ,
+	decimal Settle,
+	decimal Commission,
+	decimal Turnover ,
+	decimal WinLoss,
+	JsonNode AdditionalData);

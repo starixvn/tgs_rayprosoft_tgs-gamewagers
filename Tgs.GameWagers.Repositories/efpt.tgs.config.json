@@ -64,6 +64,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "dbo.game_wagers_event_sources",
+         "ObjectType": 0
+      },
+      {
          "Name": "dbo.games",
          "ObjectType": 0
       },
