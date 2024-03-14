@@ -8,6 +8,7 @@ using System.Web;
 using Tgs.GameWagers.Common;
 
 namespace Tgs.GameWagers.Client;
+
 internal partial class GameWagersClient
 {
 	public IAsyncEnumerable<GameWagersEventSourceInfo> GameWagersEventSourceQueryAllAsync(Guid gameProviderId, Guid id, int limit = 100, CancellationToken cancellationToken = default)
@@ -32,6 +33,7 @@ internal partial class GameWagersClient
 			.ToEnumerable()
 			.ToAsyncEnumerable();
 	}
+
 	public IAsyncEnumerable<GameWagersEventSourceInfo> GameWagersEventSourceQuerySettlementsAsync(Guid gameProviderId, Guid id, int limit = 100, CancellationToken cancellationToken = default)
 	{
 		var path = new Uri(_httpClient.BaseAddress!, $"/game-wagers-event-source/settlements/id/{gameProviderId}");
@@ -54,6 +56,7 @@ internal partial class GameWagersClient
 			.ToEnumerable()
 			.ToAsyncEnumerable();
 	}
+
 	public IAsyncEnumerable<GameWagersEventSourceInfo> GameWagersEventSourceQuerySettlementsAsync(Guid gameProviderId, DateTimeOffset timepoint, int limit = 100, CancellationToken cancellationToken = default)
 
 	{
@@ -77,6 +80,7 @@ internal partial class GameWagersClient
 			.ToEnumerable()
 			.ToAsyncEnumerable();
 	}
+
 	public IAsyncEnumerable<GameWagersEventSourceInfo> GameWagersEventSourceQuerySettlementsAsync(Guid gameProviderId, DateTimeOffset fromOn, DateTimeOffset toOn, int page = 1, int pageSize = 100, CancellationToken cancellationToken = default)
 
 	{

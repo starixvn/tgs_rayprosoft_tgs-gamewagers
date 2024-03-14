@@ -4,6 +4,7 @@ using Tgs.GameWagers.Core.Models;
 using Tgs.GameWagers.Repositories.Entities;
 
 namespace Tgs.GameWagers.Repositories;
+
 internal class GameWagerPlayerAccumRepository(TgsContext context) : IGameWagerPlayerAccumRepository
 {
 	public async ValueTask<GameWagerPlayerAccumModel?> GetNewestAsync(string playerCode, CancellationToken cancellationToken = default)

@@ -4,6 +4,7 @@ namespace Tgs.GameWagers.Core.Models;
 public record GameWagersEventSourceModel(
 	Guid Id,
 	DateTimeOffset CreatedOn,
+	Guid GameWagerPrimaryId,
 	Guid GameProviderId,
 	Guid GameProviderConfigurationId,
 	int GameId,
