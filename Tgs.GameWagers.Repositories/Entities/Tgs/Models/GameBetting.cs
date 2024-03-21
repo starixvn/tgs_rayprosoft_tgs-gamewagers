@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Tgs.GameWagers.Repositories.Entities;
 
-public partial class GameWagerPrimary
+public partial class GameBetting
 {
     /// <summary>
     /// 遊戲供應商識別碼
@@ -26,11 +26,6 @@ public partial class GameWagerPrimary
     /// 三方投注識別碼
     /// </summary>
     public string ExternalWagerId { get; set; } = null!;
-
-    /// <summary>
-    /// 三方下注/創建時間
-    /// </summary>
-    public DateTime ExternalCreatedOn { get; set; }
 
     /// <summary>
     /// 識別碼
@@ -73,7 +68,37 @@ public partial class GameWagerPrimary
     public string ExternalRoundId { get; set; } = null!;
 
     /// <summary>
+    /// 投注類型
+    /// </summary>
+    public int WagerType { get; set; }
+
+    /// <summary>
+    /// 貨幣比例
+    /// </summary>
+    public decimal CurrencyRatio { get; set; }
+
+    /// <summary>
+    /// 下注
+    /// </summary>
+    public decimal Bet { get; set; }
+
+    /// <summary>
+    /// 實際/有效下注
+    /// </summary>
+    public decimal ValidBet { get; set; }
+
+    /// <summary>
     /// 創建時間
     /// </summary>
     public DateTime CreatedOn { get; set; }
+
+    /// <summary>
+    /// 修改時間
+    /// </summary>
+    public DateTime UpdatedOn { get; set; }
+
+    /// <summary>
+    /// 附加數據
+    /// </summary>
+    public string AdditionalData { get; set; } = null!;
 }

@@ -5,27 +5,32 @@ using System.Collections.Generic;
 
 namespace Tgs.GameWagers.Repositories.Entities;
 
-public partial class GameWagerPrimaryDetail
+public partial class GameBetMarker
 {
     /// <summary>
-    /// 識別碼
+    /// 代碼
     /// </summary>
-    public Guid Id { get; set; }
+    public string Code { get; set; } = null!;
+
+    /// <summary>
+    /// 標記
+    /// </summary>
+    public Guid Marker { get; set; }
+
+    /// <summary>
+    /// 擴充
+    /// </summary>
+    public string Expansions { get; set; } = null!;
+
+    /// <summary>
+    /// 說明
+    /// </summary>
+    public string Directions { get; set; } = null!;
 
     /// <summary>
     /// 創建時間
     /// </summary>
     public DateTime CreatedOn { get; set; }
-
-    /// <summary>
-    /// 遊戲投注主要識別碼
-    /// </summary>
-    public Guid GameWagerPrimaryId { get; set; }
-
-    /// <summary>
-    /// 附加數據
-    /// </summary>
-    public string AdditionalData { get; set; } = null!;
 
     /// <summary>
     /// 修改時間

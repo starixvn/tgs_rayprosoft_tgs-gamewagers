@@ -18,6 +18,16 @@ public partial class TgsContext : DbContext
 
     public virtual DbSet<Game> Games { get; set; }
 
+    public virtual DbSet<GameBet> GameBets { get; set; }
+
+    public virtual DbSet<GameBetEventSource> GameBetEventSources { get; set; }
+
+    public virtual DbSet<GameBetFirst> GameBetFirsts { get; set; }
+
+    public virtual DbSet<GameBetMarker> GameBetMarkers { get; set; }
+
+    public virtual DbSet<GameBetting> GameBettings { get; set; }
+
     public virtual DbSet<GameProvider> GameProviders { get; set; }
 
     public virtual DbSet<GameWager> GameWagers { get; set; }
@@ -28,14 +38,6 @@ public partial class TgsContext : DbContext
 
     public virtual DbSet<GameWagerPlayerAccum> GameWagerPlayerAccums { get; set; }
 
-    public virtual DbSet<GameWagerPrimary> GameWagerPrimaries { get; set; }
-
-    public virtual DbSet<GameWagerPrimaryDetail> GameWagerPrimaryDetails { get; set; }
-
-    public virtual DbSet<GameWagerSettlement> GameWagerSettlements { get; set; }
-
-    public virtual DbSet<GameWagerSettlementFirst> GameWagerSettlementFirsts { get; set; }
-
     public virtual DbSet<GameWagerStatClose> GameWagerStatCloses { get; set; }
 
     public virtual DbSet<GameWagerStatDailyClose> GameWagerStatDailyCloses { get; set; }
@@ -45,8 +47,6 @@ public partial class TgsContext : DbContext
     public virtual DbSet<GameWagerStatHourlyClose> GameWagerStatHourlyCloses { get; set; }
 
     public virtual DbSet<GameWagerStatHourlyZoneClose> GameWagerStatHourlyZoneCloses { get; set; }
-
-    public virtual DbSet<GameWagersEventSource> GameWagersEventSources { get; set; }
 
     public virtual DbSet<Licensee> Licensees { get; set; }
 
@@ -65,21 +65,21 @@ public partial class TgsContext : DbContext
 
         modelBuilder.ApplyConfiguration(new Configurations.BrandConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameBetConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameBetEventSourceConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameBetFirstConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameBetMarkerConfiguration());
+        modelBuilder.ApplyConfiguration(new Configurations.GameBettingConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameProviderConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerDetailConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerFirstConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerPlayerAccumConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameWagerPrimaryConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameWagerPrimaryDetailConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameWagerSettlementConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameWagerSettlementFirstConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatCloseConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatDailyCloseConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatDailyZoneCloseConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatHourlyCloseConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatHourlyZoneCloseConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameWagersEventSourceConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.LicenseeConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.PlayerConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.ResellerConfiguration());

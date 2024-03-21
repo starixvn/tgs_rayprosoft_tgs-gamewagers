@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Dapper;
+﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
-using Tgs.GameWagers.Common;
 using Tgs.GameWagers.Common.Enums;
 using Tgs.GameWagers.Core;
 using Tgs.GameWagers.Core.Models;
 using Tgs.GameWagers.Repositories.Entities;
-using Tgs.GameWagers.Repositories.Entities.Configurations;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Tgs.GameWagers.Repositories;
 

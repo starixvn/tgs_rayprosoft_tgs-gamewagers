@@ -13,7 +13,7 @@ namespace Tgs.GameWagers.IntegrationTest;
 public class GameWagersClientUnitTest
 {
 	[Fact]
-	public async Task GameWagersEventSource_QueryAll()
+	public async Task GameBetsEventSource_QueryAll()
 	{
 		var gameProviderId = Guid.NewGuid();
 		var id = Guid.NewGuid();
@@ -35,18 +35,19 @@ public class GameWagersClientUnitTest
 			PlayerCode: "test",
 			CurrencyCode: "CNY",
 			WalletId: Guid.NewGuid(),
-			WagerState: WagerState.Win,
-			WagerType: WagerType.Normal,
-			FreeGameState: FreeGameState.None,
-			GambleState: GambleState.None,
-			CashoutState: CashoutState.None,
-			ResettleState: ResettleState.None,
 			ExternalRoundId: externalRoundId,
 			ExternalWagerId: externalWagerId,
 			ExternalCreatedOn: DateTimeOffset.UtcNow.AddSeconds(-11),
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
 			ExternalResettleOn: DateTimeOffset.UnixEpoch,
+			WagerState: WagerState.Win,
+			WagerType: WagerType.Normal,
+			FreeGameState: FreeGameState.None,
+			GambleState: GambleState.None,
+			CashoutState: CashoutState.None,
+			ResettleState: ResettleState.None,
+			JackpotState: JackpotState.None,
 			CurrencyRatio: 1,
 			Bet: 100,
 			ValidBet: 75,
@@ -54,6 +55,7 @@ public class GameWagersClientUnitTest
 			Commission: 0,
 			Turnover: 71.25m,
 			WinLoss: 71.25m,
+			Jackpot: 0.0m,
 			AdditionalData: new JsonObject
 			{
 				["externalRoundId"] = externalRoundId,
@@ -62,7 +64,7 @@ public class GameWagersClientUnitTest
 			.ToString());
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
 		{
-			var fakeRepository = Substitute.For<IGameWagersEventSourceRepository>();
+			var fakeRepository = Substitute.For<IGameBetEventSourceRepository>();
 			_ = fakeRepository.QueryAllAsync(
 				gameProviderId: Arg.Is(gameProviderId),
 				id: Arg.Is(id),
@@ -76,12 +78,12 @@ public class GameWagersClientUnitTest
 
 		var sut = new GameWagersClient(httpClient);
 
-		var actual = await sut.GameWagersEventSourceQueryAllAsync(
+		var actual = await sut.GameBetsEventSourceQueryAllAsync(
 			gameProviderId: gameProviderId,
 			id: id,
 			limit: limit)
 			.ToArrayAsync()
-			?? Enumerable.Empty<GameWagersEventSourceInfo>();
+			?? Enumerable.Empty<GameBetsEventSourceInfo>();
 
 		Assert.Equal(model.Id, actual.First().Id);
 		Assert.Equal(model.CreatedOn, actual.First().CreatedOn);
@@ -117,7 +119,7 @@ public class GameWagersClientUnitTest
 	}
 
 	[Fact]
-	public async Task GameWagersEventSource_QuerySettlements_Id()
+	public async Task GameBetsEventSource_QuerySettlements_Id()
 	{
 		var gameProviderId = Guid.NewGuid();
 		var id = Guid.NewGuid();
@@ -139,18 +141,19 @@ public class GameWagersClientUnitTest
 			PlayerCode: "test",
 			CurrencyCode: "CNY",
 			WalletId: Guid.NewGuid(),
-			WagerState: WagerState.Win,
-			WagerType: WagerType.Normal,
-			FreeGameState: FreeGameState.None,
-			GambleState: GambleState.None,
-			CashoutState: CashoutState.None,
-			ResettleState: ResettleState.None,
 			ExternalRoundId: externalRoundId,
 			ExternalWagerId: externalWagerId,
 			ExternalCreatedOn: DateTimeOffset.UtcNow.AddSeconds(-11),
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
 			ExternalResettleOn: DateTimeOffset.UnixEpoch,
+			WagerState: WagerState.Win,
+			WagerType: WagerType.Normal,
+			FreeGameState: FreeGameState.None,
+			GambleState: GambleState.None,
+			CashoutState: CashoutState.None,
+			ResettleState: ResettleState.None,
+			JackpotState: JackpotState.None,
 			CurrencyRatio: 1,
 			Bet: 100,
 			ValidBet: 75,
@@ -158,6 +161,7 @@ public class GameWagersClientUnitTest
 			Commission: 0,
 			Turnover: 71.25m,
 			WinLoss: 71.25m,
+			Jackpot: 0.0m,
 			AdditionalData: new JsonObject
 			{
 				["externalRoundId"] = externalRoundId,
@@ -166,7 +170,7 @@ public class GameWagersClientUnitTest
 			.ToString());
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
 		{
-			var fakeRepository = Substitute.For<IGameWagersEventSourceRepository>();
+			var fakeRepository = Substitute.For<IGameBetEventSourceRepository>();
 			_ = fakeRepository.QuerySettlementsAsync(
 				gameProviderId: Arg.Is(gameProviderId),
 				id: Arg.Is(id),
@@ -180,12 +184,12 @@ public class GameWagersClientUnitTest
 
 		var sut = new GameWagersClient(httpClient);
 
-		var actual = await sut.GameWagersEventSourceQuerySettlementsAsync(
+		var actual = await sut.GameBetsEventSourceQuerySettlementsAsync(
 			gameProviderId: gameProviderId,
 			id: id,
 			limit: limit)
 			.ToArrayAsync()
-			?? Enumerable.Empty<GameWagersEventSourceInfo>();
+			?? Enumerable.Empty<GameBetsEventSourceInfo>();
 
 		Assert.Equal(model.Id, actual.First().Id);
 		Assert.Equal(model.CreatedOn, actual.First().CreatedOn);
@@ -221,7 +225,7 @@ public class GameWagersClientUnitTest
 	}
 
 	[Fact]
-	public async Task GameWagersEventSource_QuerySettlements_Timepoint()
+	public async Task GameBetsEventSource_QuerySettlements_Timepoint()
 	{
 		var gameProviderId = Guid.NewGuid();
 		var timepoint = DateTimeOffset.UtcNow.AddMinutes(-1);
@@ -243,18 +247,19 @@ public class GameWagersClientUnitTest
 			PlayerCode: "test",
 			CurrencyCode: "CNY",
 			WalletId: Guid.NewGuid(),
-			WagerState: WagerState.Win,
-			WagerType: WagerType.Normal,
-			FreeGameState: FreeGameState.None,
-			GambleState: GambleState.None,
-			CashoutState: CashoutState.None,
-			ResettleState: ResettleState.None,
 			ExternalRoundId: externalRoundId,
 			ExternalWagerId: externalWagerId,
 			ExternalCreatedOn: DateTimeOffset.UtcNow.AddSeconds(-11),
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
 			ExternalResettleOn: DateTimeOffset.UnixEpoch,
+			WagerState: WagerState.Win,
+			WagerType: WagerType.Normal,
+			FreeGameState: FreeGameState.None,
+			GambleState: GambleState.None,
+			CashoutState: CashoutState.None,
+			ResettleState: ResettleState.None,
+			JackpotState: JackpotState.None,
 			CurrencyRatio: 1,
 			Bet: 100,
 			ValidBet: 75,
@@ -262,6 +267,7 @@ public class GameWagersClientUnitTest
 			Commission: 0,
 			Turnover: 71.25m,
 			WinLoss: 71.25m,
+			Jackpot: 0.0m,
 			AdditionalData: new JsonObject
 			{
 				["externalRoundId"] = externalRoundId,
@@ -270,7 +276,7 @@ public class GameWagersClientUnitTest
 			.ToString());
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
 		{
-			var fakeRepository = Substitute.For<IGameWagersEventSourceRepository>();
+			var fakeRepository = Substitute.For<IGameBetEventSourceRepository>();
 			_ = fakeRepository.QuerySettlementsAsync(
 				gameProviderId: Arg.Is(gameProviderId),
 				timepoint: Arg.Is(DateTimeOffset.Parse(timepoint.ToString("u"))),
@@ -284,12 +290,12 @@ public class GameWagersClientUnitTest
 
 		var sut = new GameWagersClient(httpClient);
 
-		var actual = await sut.GameWagersEventSourceQuerySettlementsAsync(
+		var actual = await sut.GameBetsEventSourceQuerySettlementsAsync(
 			gameProviderId: gameProviderId,
 			timepoint: timepoint,
 			limit: limit)
 			.ToArrayAsync()
-			?? Enumerable.Empty<GameWagersEventSourceInfo>();
+			?? Enumerable.Empty<GameBetsEventSourceInfo>();
 
 		Assert.Equal(model.Id, actual.First().Id);
 		Assert.Equal(model.CreatedOn, actual.First().CreatedOn);
@@ -325,7 +331,7 @@ public class GameWagersClientUnitTest
 	}
 
 	[Fact]
-	public async Task GameWagersEventSource_QuerySettlements_TimeInterval()
+	public async Task GameBetsEventSource_QuerySettlements_TimeInterval()
 	{
 		var gameProviderId = Guid.NewGuid();
 		var fromOn = DateTimeOffset.UtcNow.AddMinutes(-10);
@@ -349,18 +355,19 @@ public class GameWagersClientUnitTest
 			PlayerCode: "test",
 			CurrencyCode: "CNY",
 			WalletId: Guid.NewGuid(),
-			WagerState: WagerState.Win,
-			WagerType: WagerType.Normal,
-			FreeGameState: FreeGameState.None,
-			GambleState: GambleState.None,
-			CashoutState: CashoutState.None,
-			ResettleState: ResettleState.None,
 			ExternalRoundId: externalRoundId,
 			ExternalWagerId: externalWagerId,
 			ExternalCreatedOn: DateTimeOffset.UtcNow.AddSeconds(-11),
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
 			ExternalResettleOn: DateTimeOffset.UnixEpoch,
+			WagerState: WagerState.Win,
+			WagerType: WagerType.Normal,
+			FreeGameState: FreeGameState.None,
+			GambleState: GambleState.None,
+			CashoutState: CashoutState.None,
+			ResettleState: ResettleState.None,
+			JackpotState: JackpotState.None,
 			CurrencyRatio: 1,
 			Bet: 100,
 			ValidBet: 75,
@@ -368,6 +375,7 @@ public class GameWagersClientUnitTest
 			Commission: 0,
 			Turnover: 71.25m,
 			WinLoss: 71.25m,
+			Jackpot: 0.0m,
 			AdditionalData: new JsonObject
 			{
 				["externalRoundId"] = externalRoundId,
@@ -376,7 +384,7 @@ public class GameWagersClientUnitTest
 			.ToString());
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
 		{
-			var fakeRepository = Substitute.For<IGameWagersEventSourceRepository>();
+			var fakeRepository = Substitute.For<IGameBetEventSourceRepository>();
 			_ = fakeRepository.QuerySettlementsAsync(
 				gameProviderId: Arg.Is(gameProviderId),
 				fromOn: Arg.Is(DateTimeOffset.Parse(fromOn.ToString("u"))),
@@ -392,14 +400,14 @@ public class GameWagersClientUnitTest
 
 		var sut = new GameWagersClient(httpClient);
 
-		var actual = await sut.GameWagersEventSourceQuerySettlementsAsync(
+		var actual = await sut.GameBetsEventSourceQuerySettlementsAsync(
 			gameProviderId: gameProviderId,
 			fromOn: fromOn,
 			toOn: toOn,
 			page: page,
 			pageSize: pageSize)
 			.ToArrayAsync()
-			?? Enumerable.Empty<GameWagersEventSourceInfo>();
+			?? Enumerable.Empty<GameBetsEventSourceInfo>();
 
 		Assert.Equal(model.Id, actual.First().Id);
 		Assert.Equal(model.CreatedOn, actual.First().CreatedOn);

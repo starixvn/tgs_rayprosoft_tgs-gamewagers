@@ -5,22 +5,87 @@ using System.Collections.Generic;
 
 namespace Tgs.GameWagers.Repositories.Entities;
 
-public partial class GameWagerSettlement
+public partial class GameBet
 {
+    /// <summary>
+    /// 遊戲供應商識別碼
+    /// </summary>
+    public Guid GameProviderId { get; set; }
+
+    /// <summary>
+    /// 遊戲識別碼
+    /// </summary>
+    public int GameId { get; set; }
+
+    /// <summary>
+    /// 錢包識別碼
+    /// </summary>
+    public Guid WalletId { get; set; }
+
+    /// <summary>
+    /// 三方投注識別碼
+    /// </summary>
+    public string ExternalWagerId { get; set; } = null!;
+
+    /// <summary>
+    /// 三方下注/創建時間
+    /// </summary>
+    public DateTime ExternalCreatedOn { get; set; }
+
     /// <summary>
     /// 識別碼
     /// </summary>
     public Guid Id { get; set; }
 
     /// <summary>
-    /// 創建時間
+    /// 遊戲供應商設定識別碼
     /// </summary>
-    public DateTime CreatedOn { get; set; }
+    public Guid GameProviderConfigurationId { get; set; }
 
     /// <summary>
-    /// 遊戲投注主要識別碼
+    /// 公司識別碼
     /// </summary>
-    public Guid GameWagerPrimaryId { get; set; }
+    public Guid ResellerId { get; set; }
+
+    /// <summary>
+    /// 分公司識別碼
+    /// </summary>
+    public Guid LicenseeId { get; set; }
+
+    /// <summary>
+    /// 平台識別碼
+    /// </summary>
+    public Guid BrandId { get; set; }
+
+    /// <summary>
+    /// 玩家代碼
+    /// </summary>
+    public string PlayerCode { get; set; } = null!;
+
+    /// <summary>
+    /// 貨幣代碼
+    /// </summary>
+    public string CurrencyCode { get; set; } = null!;
+
+    /// <summary>
+    /// 三方局/回合識別碼
+    /// </summary>
+    public string ExternalRoundId { get; set; } = null!;
+
+    /// <summary>
+    /// 三方結算/結束時間
+    /// </summary>
+    public DateTime ExternalClosedOn { get; set; }
+
+    /// <summary>
+    /// 三方派彩時間
+    /// </summary>
+    public DateTime ExternalPayoffOn { get; set; }
+
+    /// <summary>
+    /// 三方重新結算時間
+    /// </summary>
+    public DateTime ExternalResettleOn { get; set; }
 
     /// <summary>
     /// 投注狀態
@@ -51,6 +116,11 @@ public partial class GameWagerSettlement
     /// 重新結算狀態
     /// </summary>
     public int ResettleState { get; set; }
+
+    /// <summary>
+    /// 彩金狀態
+    /// </summary>
+    public int JackpotState { get; set; }
 
     /// <summary>
     /// 貨幣比例
@@ -88,24 +158,14 @@ public partial class GameWagerSettlement
     public decimal WinLoss { get; set; }
 
     /// <summary>
-    /// 三方下注/創建時間
+    /// 彩金
     /// </summary>
-    public DateTime ExternalCreatedOn { get; set; }
+    public decimal Jackpot { get; set; }
 
     /// <summary>
-    /// 三方結算/結束時間
+    /// 創建時間
     /// </summary>
-    public DateTime ExternalClosedOn { get; set; }
-
-    /// <summary>
-    /// 三方派彩時間
-    /// </summary>
-    public DateTime ExternalPayoffOn { get; set; }
-
-    /// <summary>
-    /// 三方重新結算時間
-    /// </summary>
-    public DateTime ExternalResettleOn { get; set; }
+    public DateTime CreatedOn { get; set; }
 
     /// <summary>
     /// 結束時間
@@ -126,4 +186,9 @@ public partial class GameWagerSettlement
     /// 重置時間
     /// </summary>
     public DateTime ResetOn { get; set; }
+
+    /// <summary>
+    /// 附加數據
+    /// </summary>
+    public string AdditionalData { get; set; } = null!;
 }

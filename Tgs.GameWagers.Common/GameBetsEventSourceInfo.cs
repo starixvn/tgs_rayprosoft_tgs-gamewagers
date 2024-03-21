@@ -2,7 +2,7 @@
 using Tgs.GameWagers.Common.Enums;
 
 namespace Tgs.GameWagers.Common;
-public record GameWagersEventSourceInfo(
+public record GameBetsEventSourceInfo(
 	Guid Id,
 	DateTimeOffset CreatedOn,
 	Guid GameWagerPrimaryId,
@@ -15,18 +15,19 @@ public record GameWagersEventSourceInfo(
 	string PlayerCode,
 	string CurrencyCode,
 	Guid WalletId,
-	WagerState WagerState,
-	WagerType WagerType,
-	FreeGameState FreeGameState,
-	GambleState GambleState,
-	CashoutState CashoutState,
-	ResettleState ResettleState,
 	string ExternalRoundId,
 	string ExternalWagerId,
 	DateTimeOffset ExternalCreatedOn,
 	DateTimeOffset ExternalClosedOn,
 	DateTimeOffset ExternalPayoffOn,
 	DateTimeOffset ExternalResettleOn,
+	WagerState WagerState,
+	WagerType WagerType,
+	FreeGameState FreeGameState,
+	GambleState GambleState,
+	CashoutState CashoutState,
+	ResettleState ResettleState,
+	JackpotState JackpotState,
 	decimal CurrencyRatio,
 	decimal Bet,
 	decimal ValidBet,
@@ -34,4 +35,5 @@ public record GameWagersEventSourceInfo(
 	decimal Commission,
 	decimal Turnover,
 	decimal WinLoss,
+	decimal Jackpot,
 	JsonNode AdditionalData);

@@ -2,7 +2,7 @@
 
 namespace Tgs.GameWagers.Core;
 
-public interface IGameWagersEventSourceRepository
+public interface IGameBetEventSourceRepository
 {
 	IAsyncEnumerable<GameWagersEventSourceModel> QuerySettlementsAsync(Guid gameProviderId, Guid id, int limit = 100, CancellationToken cancellationToken = default);
 

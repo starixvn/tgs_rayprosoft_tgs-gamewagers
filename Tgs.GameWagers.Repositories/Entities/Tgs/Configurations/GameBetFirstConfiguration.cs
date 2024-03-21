@@ -9,31 +9,61 @@ using Tgs.GameWagers.Repositories.Entities;
 
 namespace Tgs.GameWagers.Repositories.Entities.Configurations
 {
-    public partial class GameWagersEventSourceConfiguration : IEntityTypeConfiguration<GameWagersEventSource>
+    public partial class GameBetFirstConfiguration : IEntityTypeConfiguration<GameBetFirst>
     {
-        public void Configure(EntityTypeBuilder<GameWagersEventSource> entity)
+        public void Configure(EntityTypeBuilder<GameBetFirst> entity)
         {
-            entity.HasKey(e => new { e.CreatedOn, e.Id }).HasName("pk_game_wagers_event_sources");
+            entity.HasKey(e => new { e.ExternalCreatedOn, e.GameProviderId, e.GameId, e.WalletId, e.ExternalWagerId }).HasName("pk_game_bet_firsts");
 
-            entity.ToTable("game_wagers_event_sources", "dbo");
+            entity.ToTable("game_bet_firsts", "dbo");
 
-            entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId, e.GameId, e.WalletId, e.ExternalWagerId }, "ix_game_wagers_event_sources");
+            entity.HasIndex(e => new { e.GameProviderId, e.GameId, e.WalletId, e.ExternalWagerId }, "ix_game_bet_firsts");
 
-            entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId }, "ix_game_wagers_event_sources_g_p");
+            entity.HasIndex(e => e.ExternalCreatedOn, "ix_game_bet_firsts_e_c_on");
 
-            entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId, e.Id }, "ix_game_wagers_event_sources_g_p_id");
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.BrandId }, "ix_game_bet_firsts_e_c_on_brand_id");
 
-            entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId, e.WagerState }, "ix_game_wagers_event_sources_g_p_wager_state");
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.CurrencyCode }, "ix_game_bet_firsts_e_c_on_currency_code");
 
-            entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId, e.WagerState, e.Id }, "ix_game_wagers_event_sources_g_p_wager_state_id");
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.ExternalRoundId }, "ix_game_bet_firsts_e_c_on_external_round_id");
 
-            entity.Property(e => e.CreatedOn)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP")
-            .HasComment("創建時間")
-            .HasColumnName("created_on");
-            entity.Property(e => e.Id)
-            .HasComment("識別碼")
-            .HasColumnName("id");
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.ExternalWagerId }, "ix_game_bet_firsts_e_c_on_external_wager_id");
+
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.GameProviderConfigurationId }, "ix_game_bet_firsts_e_c_on_g_p_c_id");
+
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.GameBetId }, "ix_game_bet_firsts_e_c_on_game_bet_id");
+
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.GameId }, "ix_game_bet_firsts_e_c_on_game_id");
+
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.GameProviderId }, "ix_game_bet_firsts_e_c_on_game_provider_id");
+
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.Id }, "ix_game_bet_firsts_e_c_on_id");
+
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.LicenseeId }, "ix_game_bet_firsts_e_c_on_licensee_id");
+
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.PlayerCode }, "ix_game_bet_firsts_e_c_on_player_code");
+
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.ResellerId }, "ix_game_bet_firsts_e_c_on_reseller_id");
+
+            entity.HasIndex(e => new { e.ExternalCreatedOn, e.WalletId }, "ix_game_bet_firsts_e_c_on_wallet_id");
+
+            entity.Property(e => e.ExternalCreatedOn)
+            .HasDefaultValueSql("'1970-01-01 00:00:00+00'::timestamp with time zone")
+            .HasComment("三方下注/創建時間")
+            .HasColumnName("external_created_on");
+            entity.Property(e => e.GameProviderId)
+            .HasComment("遊戲供應商識別碼")
+            .HasColumnName("game_provider_id");
+            entity.Property(e => e.GameId)
+            .HasComment("遊戲識別碼")
+            .HasColumnName("game_id");
+            entity.Property(e => e.WalletId)
+            .HasComment("錢包識別碼")
+            .HasColumnName("wallet_id");
+            entity.Property(e => e.ExternalWagerId)
+            .HasMaxLength(255)
+            .HasComment("三方投注識別碼")
+            .HasColumnName("external_wager_id");
             entity.Property(e => e.AdditionalData)
             .HasDefaultValueSql("'{}'::jsonb")
             .HasComment("附加數據")
@@ -50,10 +80,18 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             .HasDefaultValue(0)
             .HasComment("兌現狀態")
             .HasColumnName("cashout_state");
+            entity.Property(e => e.ClosedOn)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasComment("結束時間")
+            .HasColumnName("closed_on");
             entity.Property(e => e.Commission)
             .HasPrecision(18, 6)
             .HasComment("傭金")
             .HasColumnName("commission");
+            entity.Property(e => e.CreatedOn)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasComment("創建時間")
+            .HasColumnName("created_on");
             entity.Property(e => e.CurrencyCode)
             .HasMaxLength(16)
             .HasComment("貨幣代碼")
@@ -66,10 +104,6 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             .HasDefaultValueSql("'1970-01-01 00:00:00+00'::timestamp with time zone")
             .HasComment("三方結算/結束時間")
             .HasColumnName("external_closed_on");
-            entity.Property(e => e.ExternalCreatedOn)
-            .HasDefaultValueSql("'1970-01-01 00:00:00+00'::timestamp with time zone")
-            .HasComment("三方下注/創建時間")
-            .HasColumnName("external_created_on");
             entity.Property(e => e.ExternalPayoffOn)
             .HasDefaultValueSql("'1970-01-01 00:00:00+00'::timestamp with time zone")
             .HasComment("三方派彩時間")
@@ -82,10 +116,10 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             .HasMaxLength(255)
             .HasComment("三方局/回合識別碼")
             .HasColumnName("external_round_id");
-            entity.Property(e => e.ExternalWagerId)
-            .HasMaxLength(255)
-            .HasComment("三方投注識別碼")
-            .HasColumnName("external_wager_id");
+            entity.Property(e => e.FirstOn)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasComment("首筆時間")
+            .HasColumnName("first_on");
             entity.Property(e => e.FreeGameState)
             .HasDefaultValue(0)
             .HasComment("免費遊戲狀態")
@@ -94,15 +128,23 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             .HasDefaultValue(0)
             .HasComment("博取遊戲狀態")
             .HasColumnName("gamble_state");
-            entity.Property(e => e.GameId)
-            .HasComment("遊戲識別碼")
-            .HasColumnName("game_id");
+            entity.Property(e => e.GameBetId)
+            .HasComment("遊戲注單識別碼")
+            .HasColumnName("game_bet_id");
             entity.Property(e => e.GameProviderConfigurationId)
             .HasComment("遊戲供應商設定識別碼")
             .HasColumnName("game_provider_configuration_id");
-            entity.Property(e => e.GameProviderId)
-            .HasComment("遊戲供應商識別碼")
-            .HasColumnName("game_provider_id");
+            entity.Property(e => e.Id)
+            .HasComment("識別碼")
+            .HasColumnName("id");
+            entity.Property(e => e.Jackpot)
+            .HasPrecision(18, 6)
+            .HasComment("彩金")
+            .HasColumnName("jackpot");
+            entity.Property(e => e.JackpotState)
+            .HasDefaultValue(0)
+            .HasComment("彩金狀態")
+            .HasColumnName("jackpot_state");
             entity.Property(e => e.LicenseeId)
             .HasComment("分公司識別碼")
             .HasColumnName("licensee_id");
@@ -124,6 +166,10 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             .HasPrecision(18, 6)
             .HasComment("有效投注")
             .HasColumnName("turnover");
+            entity.Property(e => e.UpdatedOn)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasComment("修改時間")
+            .HasColumnName("updated_on");
             entity.Property(e => e.ValidBet)
             .HasPrecision(18, 6)
             .HasComment("實際/有效下注")
@@ -136,9 +182,6 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             .HasDefaultValue(0)
             .HasComment("投注類型")
             .HasColumnName("wager_type");
-            entity.Property(e => e.WalletId)
-            .HasComment("錢包識別碼")
-            .HasColumnName("wallet_id");
             entity.Property(e => e.WinLoss)
             .HasPrecision(18, 6)
             .HasComment("玩家損益/淨利")
@@ -147,6 +190,6 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             OnConfigurePartial(entity);
         }
 
-        partial void OnConfigurePartial(EntityTypeBuilder<GameWagersEventSource> entity);
+        partial void OnConfigurePartial(EntityTypeBuilder<GameBetFirst> entity);
     }
 }

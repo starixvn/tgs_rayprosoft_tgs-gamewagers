@@ -7,9 +7,9 @@ using Tgs.GameWagers.Repositories.Entities;
 
 namespace Tgs.GameWagers.Controllers;
 
-[Route("game-wagers-event-source")]
+[Route("game-bets-event-source")]
 [ApiController]
-public class GameWagersEventSourceController : ControllerBase
+public class GameBetsEventSourceController : ControllerBase
 {
 	/// <summary>
 	/// Queries all asynchronous.
@@ -28,8 +28,8 @@ public class GameWagersEventSourceController : ControllerBase
 	///			limit->100
 	/// </remarks>
 	[HttpGet("all/id/{gameProviderId:guid}")]
-	public async IAsyncEnumerable<GameWagersEventSourceInfo> QueryAllAsync(
-		[FromServices] IGameWagersEventSourceRepository repository,
+	public async IAsyncEnumerable<GameBetsEventSourceInfo> QueryAllAsync(
+		[FromServices] IGameBetEventSourceRepository repository,
 		Guid gameProviderId,
 		[FromQuery] Guid id,
 		[FromQuery] int limit = 100)
@@ -46,7 +46,7 @@ public class GameWagersEventSourceController : ControllerBase
 
 		foreach (var model in models)
 		{
-			yield return new GameWagersEventSourceInfo(
+			yield return new GameBetsEventSourceInfo(
 				Id: model.Id,
 				CreatedOn: model.CreatedOn,
 				GameWagerPrimaryId: model.GameWagerPrimaryId,
@@ -59,18 +59,19 @@ public class GameWagersEventSourceController : ControllerBase
 				PlayerCode: model.PlayerCode,
 				CurrencyCode: model.CurrencyCode,
 				WalletId: model.WalletId,
-				WagerState: model.WagerState,
-				WagerType: model.WagerType,
-				FreeGameState: model.FreeGameState,
-				GambleState: model.GambleState,
-				CashoutState: model.CashoutState,
-				ResettleState: model.ResettleState,
 				ExternalRoundId: model.ExternalRoundId,
 				ExternalWagerId: model.ExternalWagerId,
 				ExternalCreatedOn: model.ExternalCreatedOn,
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
 				ExternalResettleOn: model.ExternalResettleOn,
+				WagerState: model.WagerState,
+				WagerType: model.WagerType,
+				FreeGameState: model.FreeGameState,
+				GambleState: model.GambleState,
+				CashoutState: model.CashoutState,
+				ResettleState: model.ResettleState,
+				JackpotState: model.JackpotState,
 				CurrencyRatio: model.CurrencyRatio,
 				Bet: model.Bet,
 				ValidBet: model.ValidBet,
@@ -78,6 +79,7 @@ public class GameWagersEventSourceController : ControllerBase
 				Commission: model.Commission,
 				Turnover: model.Turnover,
 				WinLoss: model.WinLoss,
+				Jackpot: model.Jackpot,
 				AdditionalData: JsonNode.Parse(model.AdditionalData) ?? new JsonObject { });
 		}
 	}
@@ -99,8 +101,8 @@ public class GameWagersEventSourceController : ControllerBase
 	///			limit->100
 	/// </remarks>
 	[HttpGet("settlements/id/{gameProviderId:guid}")]
-	public async IAsyncEnumerable<GameWagersEventSourceInfo> QuerySettlementsAsync(
-		[FromServices] IGameWagersEventSourceRepository repository,
+	public async IAsyncEnumerable<GameBetsEventSourceInfo> QuerySettlementsAsync(
+		[FromServices] IGameBetEventSourceRepository repository,
 		Guid gameProviderId,
 		[FromQuery] Guid id,
 		[FromQuery] int limit = 100)
@@ -117,7 +119,7 @@ public class GameWagersEventSourceController : ControllerBase
 
 		foreach (var model in models)
 		{
-			yield return new GameWagersEventSourceInfo(
+			yield return new GameBetsEventSourceInfo(
 				Id: model.Id,
 				CreatedOn: model.CreatedOn,
 				GameWagerPrimaryId: model.GameWagerPrimaryId,
@@ -130,18 +132,19 @@ public class GameWagersEventSourceController : ControllerBase
 				PlayerCode: model.PlayerCode,
 				CurrencyCode: model.CurrencyCode,
 				WalletId: model.WalletId,
-				WagerState: model.WagerState,
-				WagerType: model.WagerType,
-				FreeGameState: model.FreeGameState,
-				GambleState: model.GambleState,
-				CashoutState: model.CashoutState,
-				ResettleState: model.ResettleState,
 				ExternalRoundId: model.ExternalRoundId,
 				ExternalWagerId: model.ExternalWagerId,
 				ExternalCreatedOn: model.ExternalCreatedOn,
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
 				ExternalResettleOn: model.ExternalResettleOn,
+				WagerState: model.WagerState,
+				WagerType: model.WagerType,
+				FreeGameState: model.FreeGameState,
+				GambleState: model.GambleState,
+				CashoutState: model.CashoutState,
+				ResettleState: model.ResettleState,
+				JackpotState: model.JackpotState,
 				CurrencyRatio: model.CurrencyRatio,
 				Bet: model.Bet,
 				ValidBet: model.ValidBet,
@@ -149,6 +152,7 @@ public class GameWagersEventSourceController : ControllerBase
 				Commission: model.Commission,
 				Turnover: model.Turnover,
 				WinLoss: model.WinLoss,
+				Jackpot: model.Jackpot,
 				AdditionalData: JsonNode.Parse(model.AdditionalData) ?? new JsonObject { });
 		}
 	}
@@ -170,8 +174,8 @@ public class GameWagersEventSourceController : ControllerBase
 	///			limit->100
 	/// </remarks>
 	[HttpGet("settlements/timepoint/{gameProviderId:guid}")]
-	public async IAsyncEnumerable<GameWagersEventSourceInfo> QuerySettlementsAsync(
-		[FromServices] IGameWagersEventSourceRepository repository,
+	public async IAsyncEnumerable<GameBetsEventSourceInfo> QuerySettlementsAsync(
+		[FromServices] IGameBetEventSourceRepository repository,
 		Guid gameProviderId,
 		[FromQuery] DateTimeOffset timepoint,
 		[FromQuery] int limit = 100)
@@ -188,7 +192,7 @@ public class GameWagersEventSourceController : ControllerBase
 
 		foreach (var model in models)
 		{
-			yield return new GameWagersEventSourceInfo(
+			yield return new GameBetsEventSourceInfo(
 				Id: model.Id,
 				CreatedOn: model.CreatedOn,
 				GameWagerPrimaryId: model.GameWagerPrimaryId,
@@ -201,18 +205,19 @@ public class GameWagersEventSourceController : ControllerBase
 				PlayerCode: model.PlayerCode,
 				CurrencyCode: model.CurrencyCode,
 				WalletId: model.WalletId,
-				WagerState: model.WagerState,
-				WagerType: model.WagerType,
-				FreeGameState: model.FreeGameState,
-				GambleState: model.GambleState,
-				CashoutState: model.CashoutState,
-				ResettleState: model.ResettleState,
 				ExternalRoundId: model.ExternalRoundId,
 				ExternalWagerId: model.ExternalWagerId,
 				ExternalCreatedOn: model.ExternalCreatedOn,
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
 				ExternalResettleOn: model.ExternalResettleOn,
+				WagerState: model.WagerState,
+				WagerType: model.WagerType,
+				FreeGameState: model.FreeGameState,
+				GambleState: model.GambleState,
+				CashoutState: model.CashoutState,
+				ResettleState: model.ResettleState,
+				JackpotState: model.JackpotState,
 				CurrencyRatio: model.CurrencyRatio,
 				Bet: model.Bet,
 				ValidBet: model.ValidBet,
@@ -220,6 +225,7 @@ public class GameWagersEventSourceController : ControllerBase
 				Commission: model.Commission,
 				Turnover: model.Turnover,
 				WinLoss: model.WinLoss,
+				Jackpot: model.Jackpot,
 				AdditionalData: JsonNode.Parse(model.AdditionalData) ?? new JsonObject { });
 		}
 	}
@@ -245,8 +251,8 @@ public class GameWagersEventSourceController : ControllerBase
 	///			pageSize->100
 	/// </remarks>
 	[HttpGet("settlements/time-interval/{gameProviderId:guid}")]
-	public async IAsyncEnumerable<GameWagersEventSourceInfo> QuerySettlementsAsync(
-		[FromServices] IGameWagersEventSourceRepository repository,
+	public async IAsyncEnumerable<GameBetsEventSourceInfo> QuerySettlementsAsync(
+		[FromServices] IGameBetEventSourceRepository repository,
 		Guid gameProviderId,
 		[FromQuery] DateTimeOffset fromOn,
 		[FromQuery] DateTimeOffset toOn,
@@ -267,7 +273,7 @@ public class GameWagersEventSourceController : ControllerBase
 
 		foreach (var model in models)
 		{
-			yield return new GameWagersEventSourceInfo(
+			yield return new GameBetsEventSourceInfo(
 				Id: model.Id,
 				CreatedOn: model.CreatedOn,
 				GameWagerPrimaryId: model.GameWagerPrimaryId,
@@ -280,18 +286,19 @@ public class GameWagersEventSourceController : ControllerBase
 				PlayerCode: model.PlayerCode,
 				CurrencyCode: model.CurrencyCode,
 				WalletId: model.WalletId,
-				WagerState: model.WagerState,
-				WagerType: model.WagerType,
-				FreeGameState: model.FreeGameState,
-				GambleState: model.GambleState,
-				CashoutState: model.CashoutState,
-				ResettleState: model.ResettleState,
 				ExternalRoundId: model.ExternalRoundId,
 				ExternalWagerId: model.ExternalWagerId,
 				ExternalCreatedOn: model.ExternalCreatedOn,
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
 				ExternalResettleOn: model.ExternalResettleOn,
+				WagerState: model.WagerState,
+				WagerType: model.WagerType,
+				FreeGameState: model.FreeGameState,
+				GambleState: model.GambleState,
+				CashoutState: model.CashoutState,
+				ResettleState: model.ResettleState,
+				JackpotState: model.JackpotState,
 				CurrencyRatio: model.CurrencyRatio,
 				Bet: model.Bet,
 				ValidBet: model.ValidBet,
@@ -299,6 +306,7 @@ public class GameWagersEventSourceController : ControllerBase
 				Commission: model.Commission,
 				Turnover: model.Turnover,
 				WinLoss: model.WinLoss,
+				Jackpot: model.Jackpot,
 				AdditionalData: JsonNode.Parse(model.AdditionalData) ?? new JsonObject { });
 		}
 	}
