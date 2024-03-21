@@ -22,7 +22,7 @@ public class GameWagersClientUnitTest
 		var externalRoundId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 		var externalWagerId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
-		var model = new GameWagersEventSourceModel(
+		var model = new GameBetEventSourceModel(
 			Id: Guid.NewGuid(),
 			CreatedOn: DateTimeOffset.UtcNow,
 			GameProviderId: gameProviderId,
@@ -40,8 +40,8 @@ public class GameWagersClientUnitTest
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
 			ExternalResettleOn: DateTimeOffset.UnixEpoch,
-			WagerState: WagerState.Win,
-			WagerType: WagerType.Normal,
+			BetState: BetState.Win,
+			BetType: BetType.Normal,
 			FreeGameState: FreeGameState.None,
 			GambleState: GambleState.None,
 			CashoutState: CashoutState.None,
@@ -69,7 +69,7 @@ public class GameWagersClientUnitTest
 				id: Arg.Is(id),
 				limit: Arg.Is(limit),
 				cancellationToken: Arg.Any<CancellationToken>())
-			.Returns(new GameWagersEventSourceModel[] { model }.ToAsyncEnumerable());
+			.Returns(new GameBetEventSourceModel[] { model }.ToAsyncEnumerable());
 
 			_ = services.AddSingleton(fakeRepository);
 		}));
@@ -95,8 +95,8 @@ public class GameWagersClientUnitTest
 		Assert.Equal(model.PlayerCode, actual.First().PlayerCode);
 		Assert.Equal(model.CurrencyCode, actual.First().CurrencyCode);
 		Assert.Equal(model.WalletId, actual.First().WalletId);
-		Assert.Equal(model.WagerState, actual.First().WagerState);
-		Assert.Equal(model.WagerType, actual.First().WagerType);
+		Assert.Equal(model.BetState, actual.First().BetState);
+		Assert.Equal(model.BetType, actual.First().BetType);
 		Assert.Equal(model.FreeGameState, actual.First().FreeGameState);
 		Assert.Equal(model.GambleState, actual.First().GambleState);
 		Assert.Equal(model.CashoutState, actual.First().CashoutState);
@@ -127,7 +127,7 @@ public class GameWagersClientUnitTest
 		var externalRoundId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 		var externalWagerId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
-		var model = new GameWagersEventSourceModel(
+		var model = new GameBetEventSourceModel(
 			Id: Guid.NewGuid(),
 			CreatedOn: DateTimeOffset.UtcNow,
 			GameProviderId: gameProviderId,
@@ -145,8 +145,8 @@ public class GameWagersClientUnitTest
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
 			ExternalResettleOn: DateTimeOffset.UnixEpoch,
-			WagerState: WagerState.Win,
-			WagerType: WagerType.Normal,
+			BetState: BetState.Win,
+			BetType: BetType.Normal,
 			FreeGameState: FreeGameState.None,
 			GambleState: GambleState.None,
 			CashoutState: CashoutState.None,
@@ -174,7 +174,7 @@ public class GameWagersClientUnitTest
 				id: Arg.Is(id),
 				limit: Arg.Is(limit),
 				cancellationToken: Arg.Any<CancellationToken>())
-			.Returns(new GameWagersEventSourceModel[] { model }.ToAsyncEnumerable());
+			.Returns(new GameBetEventSourceModel[] { model }.ToAsyncEnumerable());
 
 			_ = services.AddSingleton(fakeRepository);
 		}));
@@ -200,8 +200,8 @@ public class GameWagersClientUnitTest
 		Assert.Equal(model.PlayerCode, actual.First().PlayerCode);
 		Assert.Equal(model.CurrencyCode, actual.First().CurrencyCode);
 		Assert.Equal(model.WalletId, actual.First().WalletId);
-		Assert.Equal(model.WagerState, actual.First().WagerState);
-		Assert.Equal(model.WagerType, actual.First().WagerType);
+		Assert.Equal(model.BetState, actual.First().BetState);
+		Assert.Equal(model.BetType, actual.First().BetType);
 		Assert.Equal(model.FreeGameState, actual.First().FreeGameState);
 		Assert.Equal(model.GambleState, actual.First().GambleState);
 		Assert.Equal(model.CashoutState, actual.First().CashoutState);
@@ -232,7 +232,7 @@ public class GameWagersClientUnitTest
 		var externalRoundId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 		var externalWagerId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
-		var model = new GameWagersEventSourceModel(
+		var model = new GameBetEventSourceModel(
 			Id: Guid.NewGuid(),
 			CreatedOn: DateTimeOffset.UtcNow,
 			GameProviderId: gameProviderId,
@@ -250,8 +250,8 @@ public class GameWagersClientUnitTest
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
 			ExternalResettleOn: DateTimeOffset.UnixEpoch,
-			WagerState: WagerState.Win,
-			WagerType: WagerType.Normal,
+			BetState: BetState.Win,
+			BetType: BetType.Normal,
 			FreeGameState: FreeGameState.None,
 			GambleState: GambleState.None,
 			CashoutState: CashoutState.None,
@@ -279,7 +279,7 @@ public class GameWagersClientUnitTest
 				timepoint: Arg.Is(DateTimeOffset.Parse(timepoint.ToString("u"))),
 				limit: Arg.Is(limit),
 				cancellationToken: Arg.Any<CancellationToken>())
-			.Returns(new GameWagersEventSourceModel[] { model }.ToAsyncEnumerable());
+			.Returns(new GameBetEventSourceModel[] { model }.ToAsyncEnumerable());
 
 			_ = services.AddSingleton(fakeRepository);
 		}));
@@ -305,8 +305,8 @@ public class GameWagersClientUnitTest
 		Assert.Equal(model.PlayerCode, actual.First().PlayerCode);
 		Assert.Equal(model.CurrencyCode, actual.First().CurrencyCode);
 		Assert.Equal(model.WalletId, actual.First().WalletId);
-		Assert.Equal(model.WagerState, actual.First().WagerState);
-		Assert.Equal(model.WagerType, actual.First().WagerType);
+		Assert.Equal(model.BetState, actual.First().BetState);
+		Assert.Equal(model.BetType, actual.First().BetType);
 		Assert.Equal(model.FreeGameState, actual.First().FreeGameState);
 		Assert.Equal(model.GambleState, actual.First().GambleState);
 		Assert.Equal(model.CashoutState, actual.First().CashoutState);
@@ -339,7 +339,7 @@ public class GameWagersClientUnitTest
 		var externalRoundId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 		var externalWagerId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
-		var model = new GameWagersEventSourceModel(
+		var model = new GameBetEventSourceModel(
 			Id: Guid.NewGuid(),
 			CreatedOn: DateTimeOffset.UtcNow,
 			GameProviderId: gameProviderId,
@@ -357,8 +357,8 @@ public class GameWagersClientUnitTest
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
 			ExternalResettleOn: DateTimeOffset.UnixEpoch,
-			WagerState: WagerState.Win,
-			WagerType: WagerType.Normal,
+			BetState: BetState.Win,
+			BetType: BetType.Normal,
 			FreeGameState: FreeGameState.None,
 			GambleState: GambleState.None,
 			CashoutState: CashoutState.None,
@@ -388,7 +388,7 @@ public class GameWagersClientUnitTest
 				offset: Arg.Is(page - 1),
 				limit: Arg.Is(pageSize),
 				cancellationToken: Arg.Any<CancellationToken>())
-			.Returns(new GameWagersEventSourceModel[] { model }.ToAsyncEnumerable());
+			.Returns(new GameBetEventSourceModel[] { model }.ToAsyncEnumerable());
 
 			_ = services.AddSingleton(fakeRepository);
 		}));
@@ -416,8 +416,8 @@ public class GameWagersClientUnitTest
 		Assert.Equal(model.PlayerCode, actual.First().PlayerCode);
 		Assert.Equal(model.CurrencyCode, actual.First().CurrencyCode);
 		Assert.Equal(model.WalletId, actual.First().WalletId);
-		Assert.Equal(model.WagerState, actual.First().WagerState);
-		Assert.Equal(model.WagerType, actual.First().WagerType);
+		Assert.Equal(model.BetState, actual.First().BetState);
+		Assert.Equal(model.BetType, actual.First().BetType);
 		Assert.Equal(model.FreeGameState, actual.First().FreeGameState);
 		Assert.Equal(model.GambleState, actual.First().GambleState);
 		Assert.Equal(model.CashoutState, actual.First().CashoutState);

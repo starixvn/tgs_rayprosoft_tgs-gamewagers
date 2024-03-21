@@ -42,7 +42,7 @@ public class GameBetsEventSourceController : ControllerBase
 			.ToArrayAsync(
 			cancellationToken: HttpContext.RequestAborted)
 			.ConfigureAwait(false)
-			?? Enumerable.Empty<GameWagersEventSourceModel>();
+			?? Enumerable.Empty<GameBetEventSourceModel>();
 
 		foreach (var model in models)
 		{
@@ -64,8 +64,8 @@ public class GameBetsEventSourceController : ControllerBase
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
 				ExternalResettleOn: model.ExternalResettleOn,
-				WagerState: model.WagerState,
-				WagerType: model.WagerType,
+				BetState: model.BetState,
+				BetType: model.BetType,
 				FreeGameState: model.FreeGameState,
 				GambleState: model.GambleState,
 				CashoutState: model.CashoutState,
@@ -114,7 +114,7 @@ public class GameBetsEventSourceController : ControllerBase
 			.ToArrayAsync(
 			cancellationToken: HttpContext.RequestAborted)
 			.ConfigureAwait(false)
-			?? Enumerable.Empty<GameWagersEventSourceModel>();
+			?? Enumerable.Empty<GameBetEventSourceModel>();
 
 		foreach (var model in models)
 		{
@@ -136,8 +136,8 @@ public class GameBetsEventSourceController : ControllerBase
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
 				ExternalResettleOn: model.ExternalResettleOn,
-				WagerState: model.WagerState,
-				WagerType: model.WagerType,
+				BetState: model.BetState,
+				BetType: model.BetType,
 				FreeGameState: model.FreeGameState,
 				GambleState: model.GambleState,
 				CashoutState: model.CashoutState,
@@ -186,7 +186,7 @@ public class GameBetsEventSourceController : ControllerBase
 			.ToArrayAsync(
 			cancellationToken: HttpContext.RequestAborted)
 			.ConfigureAwait(false)
-			?? Enumerable.Empty<GameWagersEventSourceModel>();
+			?? Enumerable.Empty<GameBetEventSourceModel>();
 
 		foreach (var model in models)
 		{
@@ -208,8 +208,8 @@ public class GameBetsEventSourceController : ControllerBase
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
 				ExternalResettleOn: model.ExternalResettleOn,
-				WagerState: model.WagerState,
-				WagerType: model.WagerType,
+				BetState: model.BetState,
+				BetType: model.BetType,
 				FreeGameState: model.FreeGameState,
 				GambleState: model.GambleState,
 				CashoutState: model.CashoutState,
@@ -266,7 +266,7 @@ public class GameBetsEventSourceController : ControllerBase
 			.ToArrayAsync(
 			cancellationToken: HttpContext.RequestAborted)
 			.ConfigureAwait(false)
-			?? Enumerable.Empty<GameWagersEventSourceModel>();
+			?? Enumerable.Empty<GameBetEventSourceModel>();
 
 		foreach (var model in models)
 		{
@@ -288,8 +288,8 @@ public class GameBetsEventSourceController : ControllerBase
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
 				ExternalResettleOn: model.ExternalResettleOn,
-				WagerState: model.WagerState,
-				WagerType: model.WagerType,
+				BetState: model.BetState,
+				BetType: model.BetType,
 				FreeGameState: model.FreeGameState,
 				GambleState: model.GambleState,
 				CashoutState: model.CashoutState,

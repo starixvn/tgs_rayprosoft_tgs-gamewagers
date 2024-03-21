@@ -68,9 +68,9 @@ public partial class GameBetting
     public string ExternalRoundId { get; set; } = null!;
 
     /// <summary>
-    /// 投注類型
+    /// 注單類型
     /// </summary>
-    public int WagerType { get; set; }
+    public int BetType { get; set; }
 
     /// <summary>
     /// 貨幣比例

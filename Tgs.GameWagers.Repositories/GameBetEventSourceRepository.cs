@@ -9,14 +9,14 @@ namespace Tgs.GameWagers.Repositories;
 internal class GameBetEventSourceRepository(
 	TgsContext context) : IGameBetEventSourceRepository
 {
-	public IAsyncEnumerable<GameWagersEventSourceModel> QueryAllAsync(Guid gameProviderId, Guid id, int limit = 100, CancellationToken cancellationToken = default)
+	public IAsyncEnumerable<GameBetEventSourceModel> QueryAllAsync(Guid gameProviderId, Guid id, int limit = 100, CancellationToken cancellationToken = default)
 		=> context.GameBetEventSources
 		.Where(predicate: gbes => gbes.CreatedOn >= DateTime.UtcNow.AddDays(-45) &&
 		gbes.GameProviderId == gameProviderId &&
 		gbes.Id > id)
 		.Distinct()
 		.OrderBy(keySelector: gbes => gbes.Id)
-		.Select(gbes => new GameWagersEventSourceModel(
+		.Select(gbes => new GameBetEventSourceModel(
 			gbes.Id,
 			gbes.CreatedOn,
 			gbes.GameProviderId,
@@ -34,8 +34,8 @@ internal class GameBetEventSourceRepository(
 			gbes.ExternalClosedOn,
 			gbes.ExternalPayoffOn,
 			gbes.ExternalResettleOn,
-			(WagerState)gbes.WagerState,
-			(WagerType)gbes.WagerType,
+			(BetState)gbes.BetState,
+			(BetType)gbes.BetType,
 			(FreeGameState)gbes.FreeGameState,
 			(GambleState)gbes.GambleState,
 			(CashoutState)gbes.CashoutState,
@@ -54,16 +54,16 @@ internal class GameBetEventSourceRepository(
 		.Take(limit)
 		.AsAsyncEnumerable();
 
-	public IAsyncEnumerable<GameWagersEventSourceModel> QuerySettlementsAsync(Guid gameProviderId, Guid id, int limit = 100, CancellationToken cancellationToken = default)
+	public IAsyncEnumerable<GameBetEventSourceModel> QuerySettlementsAsync(Guid gameProviderId, Guid id, int limit = 100, CancellationToken cancellationToken = default)
 		=> context.GameBetEventSources
 		.Where(predicate: gwes => gwes.CreatedOn >= DateTime.UtcNow.AddDays(-45) &&
 		gwes.GameProviderId == gameProviderId &&
-		gwes.WagerState != (int)WagerState.Waiting &&
-		gwes.WagerState != (int)WagerState.Running &&
+		gwes.BetState != (int)BetState.Waiting &&
+		gwes.BetState != (int)BetState.Running &&
 		gwes.Id > id)
 		.Distinct()
 		.OrderBy(keySelector: gbes => gbes.Id)
-		.Select(gbes => new GameWagersEventSourceModel(
+		.Select(gbes => new GameBetEventSourceModel(
 			gbes.Id,
 			gbes.CreatedOn,
 			gbes.GameProviderId,
@@ -81,8 +81,8 @@ internal class GameBetEventSourceRepository(
 			gbes.ExternalClosedOn,
 			gbes.ExternalPayoffOn,
 			gbes.ExternalResettleOn,
-			(WagerState)gbes.WagerState,
-			(WagerType)gbes.WagerType,
+			(BetState)gbes.BetState,
+			(BetType)gbes.BetType,
 			(FreeGameState)gbes.FreeGameState,
 			(GambleState)gbes.GambleState,
 			(CashoutState)gbes.CashoutState,
@@ -101,16 +101,16 @@ internal class GameBetEventSourceRepository(
 		.Take(limit)
 		.AsAsyncEnumerable();
 
-	public IAsyncEnumerable<GameWagersEventSourceModel> QuerySettlementsAsync(Guid gameProviderId, DateTimeOffset fromOn, DateTimeOffset toOn, int offset = 0, int limit = 100, CancellationToken cancellationToken = default)
+	public IAsyncEnumerable<GameBetEventSourceModel> QuerySettlementsAsync(Guid gameProviderId, DateTimeOffset fromOn, DateTimeOffset toOn, int offset = 0, int limit = 100, CancellationToken cancellationToken = default)
 		=> context.GameBetEventSources
 		.Where(predicate: gwes => gwes.CreatedOn >= fromOn.UtcDateTime &&
 		gwes.CreatedOn < toOn.UtcDateTime &&
 		gwes.GameProviderId == gameProviderId &&
-		gwes.WagerState != (int)WagerState.Waiting &&
-		gwes.WagerState != (int)WagerState.Running)
+		gwes.BetState != (int)BetState.Waiting &&
+		gwes.BetState != (int)BetState.Running)
 		.Distinct()
 		.OrderBy(keySelector: gwes => gwes.Id)
-		.Select(gbes => new GameWagersEventSourceModel(
+		.Select(gbes => new GameBetEventSourceModel(
 			gbes.Id,
 			gbes.CreatedOn,
 			gbes.GameProviderId,
@@ -128,8 +128,8 @@ internal class GameBetEventSourceRepository(
 			gbes.ExternalClosedOn,
 			gbes.ExternalPayoffOn,
 			gbes.ExternalResettleOn,
-			(WagerState)gbes.WagerState,
-			(WagerType)gbes.WagerType,
+			(BetState)gbes.BetState,
+			(BetType)gbes.BetType,
 			(FreeGameState)gbes.FreeGameState,
 			(GambleState)gbes.GambleState,
 			(CashoutState)gbes.CashoutState,
@@ -148,15 +148,15 @@ internal class GameBetEventSourceRepository(
 		.Take(limit)
 		.AsAsyncEnumerable();
 
-	public IAsyncEnumerable<GameWagersEventSourceModel> QuerySettlementsAsync(Guid gameProviderId, DateTimeOffset timepoint, int limit = 100, CancellationToken cancellationToken = default)
+	public IAsyncEnumerable<GameBetEventSourceModel> QuerySettlementsAsync(Guid gameProviderId, DateTimeOffset timepoint, int limit = 100, CancellationToken cancellationToken = default)
 		=> context.GameBetEventSources
 		.Where(predicate: gwes => gwes.CreatedOn >= timepoint.UtcDateTime &&
 		gwes.GameProviderId == gameProviderId &&
-		gwes.WagerState != (int)WagerState.Waiting &&
-		gwes.WagerState != (int)WagerState.Running)
+		gwes.BetState != (int)BetState.Waiting &&
+		gwes.BetState != (int)BetState.Running)
 		.Distinct()
 		.OrderBy(keySelector: gwes => gwes.Id)
-		.Select(gbes => new GameWagersEventSourceModel(
+		.Select(gbes => new GameBetEventSourceModel(
 			gbes.Id,
 			gbes.CreatedOn,
 			gbes.GameProviderId,
@@ -174,8 +174,8 @@ internal class GameBetEventSourceRepository(
 			gbes.ExternalClosedOn,
 			gbes.ExternalPayoffOn,
 			gbes.ExternalResettleOn,
-			(WagerState)gbes.WagerState,
-			(WagerType)gbes.WagerType,
+			(BetState)gbes.BetState,
+			(BetType)gbes.BetType,
 			(FreeGameState)gbes.FreeGameState,
 			(GambleState)gbes.GambleState,
 			(CashoutState)gbes.CashoutState,

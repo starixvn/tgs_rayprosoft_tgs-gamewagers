@@ -39,6 +39,10 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             .HasPrecision(18, 6)
             .HasComment("下注")
             .HasColumnName("bet");
+            entity.Property(e => e.BetType)
+            .HasDefaultValue(0)
+            .HasComment("注單類型")
+            .HasColumnName("bet_type");
             entity.Property(e => e.BrandId)
             .HasComment("平台識別碼")
             .HasColumnName("brand_id");
@@ -81,10 +85,6 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             .HasPrecision(18, 6)
             .HasComment("實際/有效下注")
             .HasColumnName("valid_bet");
-            entity.Property(e => e.WagerType)
-            .HasDefaultValue(0)
-            .HasComment("投注類型")
-            .HasColumnName("wager_type");
 
             OnConfigurePartial(entity);
         }

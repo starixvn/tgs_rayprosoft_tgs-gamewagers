@@ -88,14 +88,14 @@ public partial class GameBet
     public DateTime ExternalResettleOn { get; set; }
 
     /// <summary>
-    /// 投注狀態
+    /// 注單狀態
     /// </summary>
-    public int WagerState { get; set; }
+    public int BetState { get; set; }
 
     /// <summary>
-    /// 投注類型
+    /// 注單類型
     /// </summary>
-    public int WagerType { get; set; }
+    public int BetType { get; set; }
 
     /// <summary>
     /// 免費遊戲狀態

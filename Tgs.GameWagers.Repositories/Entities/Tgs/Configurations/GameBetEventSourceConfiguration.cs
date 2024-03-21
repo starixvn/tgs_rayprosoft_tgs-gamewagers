@@ -21,11 +21,11 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
 
             entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId }, "ix_game_bet_event_sources_g_p");
 
+            entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId, e.BetState }, "ix_game_bet_event_sources_g_p_bet_state");
+
+            entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId, e.BetState, e.Id }, "ix_game_bet_event_sources_g_p_bet_state_id");
+
             entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId, e.Id }, "ix_game_bet_event_sources_g_p_id");
-
-            entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId, e.WagerState }, "ix_game_bet_event_sources_g_p_wager_state");
-
-            entity.HasIndex(e => new { e.CreatedOn, e.GameProviderId, e.WagerState, e.Id }, "ix_game_bet_event_sources_g_p_wager_state_id");
 
             entity.Property(e => e.CreatedOn)
             .HasDefaultValueSql("CURRENT_TIMESTAMP")
@@ -43,6 +43,14 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             .HasPrecision(18, 6)
             .HasComment("下注")
             .HasColumnName("bet");
+            entity.Property(e => e.BetState)
+            .HasDefaultValue(0)
+            .HasComment("注單狀態")
+            .HasColumnName("bet_state");
+            entity.Property(e => e.BetType)
+            .HasDefaultValue(0)
+            .HasComment("注單類型")
+            .HasColumnName("bet_type");
             entity.Property(e => e.BrandId)
             .HasComment("平台識別碼")
             .HasColumnName("brand_id");
@@ -136,14 +144,6 @@ namespace Tgs.GameWagers.Repositories.Entities.Configurations
             .HasPrecision(18, 6)
             .HasComment("實際/有效下注")
             .HasColumnName("valid_bet");
-            entity.Property(e => e.WagerState)
-            .HasDefaultValue(0)
-            .HasComment("投注狀態")
-            .HasColumnName("wager_state");
-            entity.Property(e => e.WagerType)
-            .HasDefaultValue(0)
-            .HasComment("投注類型")
-            .HasColumnName("wager_type");
             entity.Property(e => e.WalletId)
             .HasComment("錢包識別碼")
             .HasColumnName("wallet_id");

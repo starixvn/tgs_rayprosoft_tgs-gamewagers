@@ -1,7 +1,7 @@
 ﻿using Tgs.GameWagers.Common.Enums;
 
 namespace Tgs.GameWagers.Core.Models;
-public record GameWagersEventSourceModel(
+public record GameBetEventSourceModel(
 	Guid Id,
 	DateTimeOffset CreatedOn,
 	Guid GameProviderId,
@@ -19,8 +19,8 @@ public record GameWagersEventSourceModel(
 	DateTimeOffset ExternalClosedOn,
 	DateTimeOffset ExternalPayoffOn,
 	DateTimeOffset ExternalResettleOn,
-	WagerState WagerState,
-	WagerType WagerType,
+	BetState BetState,
+	BetType BetType,
 	FreeGameState FreeGameState,
 	GambleState GambleState,
 	CashoutState CashoutState,
