@@ -5,7 +5,6 @@ namespace Tgs.GameWagers.Common;
 public record GameBetsEventSourceInfo(
 	Guid Id,
 	DateTimeOffset CreatedOn,
-	Guid GameWagerPrimaryId,
 	Guid GameProviderId,
 	Guid GameProviderConfigurationId,
 	int GameId,

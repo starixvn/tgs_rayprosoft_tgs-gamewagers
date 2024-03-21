@@ -25,7 +25,6 @@ public class GameWagersClientUnitTest
 		var model = new GameWagersEventSourceModel(
 			Id: Guid.NewGuid(),
 			CreatedOn: DateTimeOffset.UtcNow,
-			GameWagerPrimaryId: Guid.NewGuid(),
 			GameProviderId: gameProviderId,
 			GameProviderConfigurationId: Guid.NewGuid(),
 			GameId: 1,
@@ -131,7 +130,6 @@ public class GameWagersClientUnitTest
 		var model = new GameWagersEventSourceModel(
 			Id: Guid.NewGuid(),
 			CreatedOn: DateTimeOffset.UtcNow,
-			GameWagerPrimaryId: Guid.NewGuid(),
 			GameProviderId: gameProviderId,
 			GameProviderConfigurationId: Guid.NewGuid(),
 			GameId: 1,
@@ -237,7 +235,6 @@ public class GameWagersClientUnitTest
 		var model = new GameWagersEventSourceModel(
 			Id: Guid.NewGuid(),
 			CreatedOn: DateTimeOffset.UtcNow,
-			GameWagerPrimaryId: Guid.NewGuid(),
 			GameProviderId: gameProviderId,
 			GameProviderConfigurationId: Guid.NewGuid(),
 			GameId: 1,
@@ -345,7 +342,6 @@ public class GameWagersClientUnitTest
 		var model = new GameWagersEventSourceModel(
 			Id: Guid.NewGuid(),
 			CreatedOn: DateTimeOffset.UtcNow,
-			GameWagerPrimaryId: Guid.NewGuid(),
 			GameProviderId: gameProviderId,
 			GameProviderConfigurationId: Guid.NewGuid(),
 			GameId: 1,

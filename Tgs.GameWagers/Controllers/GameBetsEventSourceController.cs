@@ -49,7 +49,6 @@ public class GameBetsEventSourceController : ControllerBase
 			yield return new GameBetsEventSourceInfo(
 				Id: model.Id,
 				CreatedOn: model.CreatedOn,
-				GameWagerPrimaryId: model.GameWagerPrimaryId,
 				GameProviderId: model.GameProviderId,
 				GameProviderConfigurationId: model.GameProviderConfigurationId,
 				GameId: model.GameId,
@@ -122,7 +121,6 @@ public class GameBetsEventSourceController : ControllerBase
 			yield return new GameBetsEventSourceInfo(
 				Id: model.Id,
 				CreatedOn: model.CreatedOn,
-				GameWagerPrimaryId: model.GameWagerPrimaryId,
 				GameProviderId: model.GameProviderId,
 				GameProviderConfigurationId: model.GameProviderConfigurationId,
 				GameId: model.GameId,
@@ -195,7 +193,6 @@ public class GameBetsEventSourceController : ControllerBase
 			yield return new GameBetsEventSourceInfo(
 				Id: model.Id,
 				CreatedOn: model.CreatedOn,
-				GameWagerPrimaryId: model.GameWagerPrimaryId,
 				GameProviderId: model.GameProviderId,
 				GameProviderConfigurationId: model.GameProviderConfigurationId,
 				GameId: model.GameId,
@@ -276,7 +273,6 @@ public class GameBetsEventSourceController : ControllerBase
 			yield return new GameBetsEventSourceInfo(
 				Id: model.Id,
 				CreatedOn: model.CreatedOn,
-				GameWagerPrimaryId: model.GameWagerPrimaryId,
 				GameProviderId: model.GameProviderId,
 				GameProviderConfigurationId: model.GameProviderConfigurationId,
 				GameId: model.GameId,

@@ -19,7 +19,6 @@ internal class GameBetEventSourceRepository(
 		.Select(gbes => new GameWagersEventSourceModel(
 			gbes.Id,
 			gbes.CreatedOn,
-			gbes.Id,
 			gbes.GameProviderId,
 			gbes.GameProviderConfigurationId,
 			gbes.GameId,
@@ -67,7 +66,6 @@ internal class GameBetEventSourceRepository(
 		.Select(gbes => new GameWagersEventSourceModel(
 			gbes.Id,
 			gbes.CreatedOn,
-			gbes.Id,
 			gbes.GameProviderId,
 			gbes.GameProviderConfigurationId,
 			gbes.GameId,
@@ -115,7 +113,6 @@ internal class GameBetEventSourceRepository(
 		.Select(gbes => new GameWagersEventSourceModel(
 			gbes.Id,
 			gbes.CreatedOn,
-			gbes.Id,
 			gbes.GameProviderId,
 			gbes.GameProviderConfigurationId,
 			gbes.GameId,
@@ -162,7 +159,6 @@ internal class GameBetEventSourceRepository(
 		.Select(gbes => new GameWagersEventSourceModel(
 			gbes.Id,
 			gbes.CreatedOn,
-			gbes.Id,
 			gbes.GameProviderId,
 			gbes.GameProviderConfigurationId,
 			gbes.GameId,
