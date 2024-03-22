@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Tgs.GameWagers.Common;
 using Tgs.GameWagers.Core;
 using Tgs.GameWagers.Core.Models;
-using Tgs.GameWagers.Repositories.Entities;
 
 namespace Tgs.GameWagers.Controllers;
 
@@ -59,7 +58,7 @@ public class GameBetsEventSourceController : ControllerBase
 				CurrencyCode: model.CurrencyCode,
 				WalletId: model.WalletId,
 				ExternalRoundId: model.ExternalRoundId,
-				ExternalWagerId: model.ExternalWagerId,
+				ExternalBetId: model.ExternalBetId,
 				ExternalCreatedOn: model.ExternalCreatedOn,
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
@@ -131,7 +130,7 @@ public class GameBetsEventSourceController : ControllerBase
 				CurrencyCode: model.CurrencyCode,
 				WalletId: model.WalletId,
 				ExternalRoundId: model.ExternalRoundId,
-				ExternalWagerId: model.ExternalWagerId,
+				ExternalBetId: model.ExternalBetId,
 				ExternalCreatedOn: model.ExternalCreatedOn,
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
@@ -203,7 +202,7 @@ public class GameBetsEventSourceController : ControllerBase
 				CurrencyCode: model.CurrencyCode,
 				WalletId: model.WalletId,
 				ExternalRoundId: model.ExternalRoundId,
-				ExternalWagerId: model.ExternalWagerId,
+				ExternalBetId: model.ExternalBetId,
 				ExternalCreatedOn: model.ExternalCreatedOn,
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,
@@ -283,7 +282,7 @@ public class GameBetsEventSourceController : ControllerBase
 				CurrencyCode: model.CurrencyCode,
 				WalletId: model.WalletId,
 				ExternalRoundId: model.ExternalRoundId,
-				ExternalWagerId: model.ExternalWagerId,
+				ExternalBetId: model.ExternalBetId,
 				ExternalCreatedOn: model.ExternalCreatedOn,
 				ExternalClosedOn: model.ExternalClosedOn,
 				ExternalPayoffOn: model.ExternalPayoffOn,

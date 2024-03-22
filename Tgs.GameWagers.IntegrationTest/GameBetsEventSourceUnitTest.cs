@@ -20,7 +20,7 @@ public class GameWagersClientUnitTest
 		var limit = 100;
 
 		var externalRoundId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-		var externalWagerId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+		var externalBetId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
 		var model = new GameBetEventSourceModel(
 			Id: Guid.NewGuid(),
@@ -35,7 +35,7 @@ public class GameWagersClientUnitTest
 			CurrencyCode: "CNY",
 			WalletId: Guid.NewGuid(),
 			ExternalRoundId: externalRoundId,
-			ExternalWagerId: externalWagerId,
+			ExternalBetId: externalBetId,
 			ExternalCreatedOn: DateTimeOffset.UtcNow.AddSeconds(-11),
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
@@ -57,8 +57,8 @@ public class GameWagersClientUnitTest
 			Jackpot: 0.0m,
 			AdditionalData: new JsonObject
 			{
-				["externalRoundId"] = externalRoundId,
-				["externalWagerId"] = externalWagerId
+				["ExternalRoundId"] = externalRoundId,
+				["ExternalBetId"] = externalBetId
 			}
 			.ToString());
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
@@ -102,7 +102,7 @@ public class GameWagersClientUnitTest
 		Assert.Equal(model.CashoutState, actual.First().CashoutState);
 		Assert.Equal(model.ResettleState, actual.First().ResettleState);
 		Assert.Equal(model.ExternalRoundId, actual.First().ExternalRoundId);
-		Assert.Equal(model.ExternalWagerId, actual.First().ExternalWagerId);
+		Assert.Equal(model.ExternalBetId, actual.First().ExternalBetId);
 		Assert.Equal(model.ExternalCreatedOn, actual.First().ExternalCreatedOn);
 		Assert.Equal(model.ExternalClosedOn, actual.First().ExternalClosedOn);
 		Assert.Equal(model.ExternalPayoffOn, actual.First().ExternalPayoffOn);
@@ -125,7 +125,7 @@ public class GameWagersClientUnitTest
 		var limit = 100;
 
 		var externalRoundId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-		var externalWagerId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+		var externalBetId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
 		var model = new GameBetEventSourceModel(
 			Id: Guid.NewGuid(),
@@ -140,7 +140,7 @@ public class GameWagersClientUnitTest
 			CurrencyCode: "CNY",
 			WalletId: Guid.NewGuid(),
 			ExternalRoundId: externalRoundId,
-			ExternalWagerId: externalWagerId,
+			ExternalBetId: externalBetId,
 			ExternalCreatedOn: DateTimeOffset.UtcNow.AddSeconds(-11),
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
@@ -162,8 +162,8 @@ public class GameWagersClientUnitTest
 			Jackpot: 0.0m,
 			AdditionalData: new JsonObject
 			{
-				["externalRoundId"] = externalRoundId,
-				["externalWagerId"] = externalWagerId
+				["ExternalRoundId"] = externalRoundId,
+				["ExternalBetId"] = externalBetId
 			}
 			.ToString());
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
@@ -207,7 +207,7 @@ public class GameWagersClientUnitTest
 		Assert.Equal(model.CashoutState, actual.First().CashoutState);
 		Assert.Equal(model.ResettleState, actual.First().ResettleState);
 		Assert.Equal(model.ExternalRoundId, actual.First().ExternalRoundId);
-		Assert.Equal(model.ExternalWagerId, actual.First().ExternalWagerId);
+		Assert.Equal(model.ExternalBetId, actual.First().ExternalBetId);
 		Assert.Equal(model.ExternalCreatedOn, actual.First().ExternalCreatedOn);
 		Assert.Equal(model.ExternalClosedOn, actual.First().ExternalClosedOn);
 		Assert.Equal(model.ExternalPayoffOn, actual.First().ExternalPayoffOn);
@@ -230,7 +230,7 @@ public class GameWagersClientUnitTest
 		var limit = 100;
 
 		var externalRoundId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-		var externalWagerId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+		var externalBetId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
 		var model = new GameBetEventSourceModel(
 			Id: Guid.NewGuid(),
@@ -245,7 +245,7 @@ public class GameWagersClientUnitTest
 			CurrencyCode: "CNY",
 			WalletId: Guid.NewGuid(),
 			ExternalRoundId: externalRoundId,
-			ExternalWagerId: externalWagerId,
+			ExternalBetId: externalBetId,
 			ExternalCreatedOn: DateTimeOffset.UtcNow.AddSeconds(-11),
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
@@ -267,8 +267,8 @@ public class GameWagersClientUnitTest
 			Jackpot: 0.0m,
 			AdditionalData: new JsonObject
 			{
-				["externalRoundId"] = externalRoundId,
-				["externalWagerId"] = externalWagerId
+				["ExternalRoundId"] = externalRoundId,
+				["ExternalBetId"] = externalBetId
 			}
 			.ToString());
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
@@ -312,7 +312,7 @@ public class GameWagersClientUnitTest
 		Assert.Equal(model.CashoutState, actual.First().CashoutState);
 		Assert.Equal(model.ResettleState, actual.First().ResettleState);
 		Assert.Equal(model.ExternalRoundId, actual.First().ExternalRoundId);
-		Assert.Equal(model.ExternalWagerId, actual.First().ExternalWagerId);
+		Assert.Equal(model.ExternalBetId, actual.First().ExternalBetId);
 		Assert.Equal(model.ExternalCreatedOn, actual.First().ExternalCreatedOn);
 		Assert.Equal(model.ExternalClosedOn, actual.First().ExternalClosedOn);
 		Assert.Equal(model.ExternalPayoffOn, actual.First().ExternalPayoffOn);
@@ -337,7 +337,7 @@ public class GameWagersClientUnitTest
 		var pageSize = 100;
 
 		var externalRoundId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-		var externalWagerId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+		var externalBetId = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
 
 		var model = new GameBetEventSourceModel(
 			Id: Guid.NewGuid(),
@@ -352,7 +352,7 @@ public class GameWagersClientUnitTest
 			CurrencyCode: "CNY",
 			WalletId: Guid.NewGuid(),
 			ExternalRoundId: externalRoundId,
-			ExternalWagerId: externalWagerId,
+			ExternalBetId: externalBetId,
 			ExternalCreatedOn: DateTimeOffset.UtcNow.AddSeconds(-11),
 			ExternalClosedOn: DateTimeOffset.UtcNow.AddSeconds(-7),
 			ExternalPayoffOn: DateTimeOffset.UtcNow.AddSeconds(-3),
@@ -374,8 +374,8 @@ public class GameWagersClientUnitTest
 			Jackpot: 0.0m,
 			AdditionalData: new JsonObject
 			{
-				["externalRoundId"] = externalRoundId,
-				["externalWagerId"] = externalWagerId
+				["ExternalRoundId"] = externalRoundId,
+				["ExternalBetId"] = externalBetId
 			}
 			.ToString());
 		var web = new GameWagersClientServiceApplication(builder => _ = builder.ConfigureServices(services =>
@@ -423,7 +423,7 @@ public class GameWagersClientUnitTest
 		Assert.Equal(model.CashoutState, actual.First().CashoutState);
 		Assert.Equal(model.ResettleState, actual.First().ResettleState);
 		Assert.Equal(model.ExternalRoundId, actual.First().ExternalRoundId);
-		Assert.Equal(model.ExternalWagerId, actual.First().ExternalWagerId);
+		Assert.Equal(model.ExternalBetId, actual.First().ExternalBetId);
 		Assert.Equal(model.ExternalCreatedOn, actual.First().ExternalCreatedOn);
 		Assert.Equal(model.ExternalClosedOn, actual.First().ExternalClosedOn);
 		Assert.Equal(model.ExternalPayoffOn, actual.First().ExternalPayoffOn);
