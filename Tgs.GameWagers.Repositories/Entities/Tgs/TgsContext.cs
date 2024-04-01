@@ -18,23 +18,7 @@ public partial class TgsContext : DbContext
 
     public virtual DbSet<Game> Games { get; set; }
 
-    public virtual DbSet<GameBet> GameBets { get; set; }
-
-    public virtual DbSet<GameBetEventSource> GameBetEventSources { get; set; }
-
-    public virtual DbSet<GameBetFirst> GameBetFirsts { get; set; }
-
-    public virtual DbSet<GameBetMarker> GameBetMarkers { get; set; }
-
-    public virtual DbSet<GameBetting> GameBettings { get; set; }
-
     public virtual DbSet<GameProvider> GameProviders { get; set; }
-
-    public virtual DbSet<GameWager> GameWagers { get; set; }
-
-    public virtual DbSet<GameWagerDetail> GameWagerDetails { get; set; }
-
-    public virtual DbSet<GameWagerFirst> GameWagerFirsts { get; set; }
 
     public virtual DbSet<GameWagerPlayerAccum> GameWagerPlayerAccums { get; set; }
 
@@ -65,15 +49,7 @@ public partial class TgsContext : DbContext
 
         modelBuilder.ApplyConfiguration(new Configurations.BrandConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameBetConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameBetEventSourceConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameBetFirstConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameBetMarkerConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameBettingConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameProviderConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameWagerConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameWagerDetailConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.GameWagerFirstConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerPlayerAccumConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatCloseConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.GameWagerStatDailyCloseConfiguration());

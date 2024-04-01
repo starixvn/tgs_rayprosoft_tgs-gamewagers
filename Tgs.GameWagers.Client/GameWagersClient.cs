@@ -7,7 +7,7 @@ using Tgs.GameWagers.Common.Enums;
 
 namespace Tgs.GameWagers.Client;
 
-internal partial class GameWagersClient : IGameWagersClient
+internal partial class GameWagersClient(HttpClient httpClient) : IGameWagersClient
 {
 	private static readonly JsonSerializerOptions _SerializerOptions = new()
 	{
@@ -17,11 +17,6 @@ internal partial class GameWagersClient : IGameWagersClient
 			new JsonStringEnumConverter()
 		}
 	};
-
-	private readonly HttpClient _httpClient;
-
-	public GameWagersClient(HttpClient httpClient)
-		=> _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
 	public IAsyncEnumerable<BrandWagerGameStatsInfo> BrandWagerGameStatsQueryAsync(
 		string brandCode,
@@ -33,7 +28,7 @@ internal partial class GameWagersClient : IGameWagersClient
 		int pageSize = 1000,
 		CancellationToken cancellationToken = default)
 	{
-		var path = new Uri(_httpClient.BaseAddress!, $"/api/brandwagergameminsstats/{brandCode}");
+		var path = new Uri(httpClient.BaseAddress!, $"/api/brandwagergameminsstats/{brandCode}");
 		var builder = new UriBuilder(path);
 		var query = HttpUtility.ParseQueryString(builder.Query);
 		query["startOn"] = startOn.ToString("u");
@@ -45,7 +40,7 @@ internal partial class GameWagersClient : IGameWagersClient
 		builder.Query = query.ToString();
 		string url = builder.ToString();
 
-		return _httpClient.GetAsync(url, cancellationToken)
+		return httpClient.GetAsync(url, cancellationToken)
 			.ToAsyncEnumerable()
 			.Do(response => response.EnsureSuccessStatusCode())
 			.SelectMany(response => response.Content
@@ -68,7 +63,7 @@ internal partial class GameWagersClient : IGameWagersClient
 		int pageSize = 1000,
 		CancellationToken cancellationToken = default)
 	{
-		var path = new Uri(_httpClient.BaseAddress!, $"/api/brandwagerplayerminsstats/{brandCode}");
+		var path = new Uri(httpClient.BaseAddress!, $"/api/brandwagerplayerminsstats/{brandCode}");
 		var builder = new UriBuilder(path);
 		var query = HttpUtility.ParseQueryString(builder.Query);
 		query["startOn"] = startOn.ToString("u");
@@ -80,7 +75,7 @@ internal partial class GameWagersClient : IGameWagersClient
 		builder.Query = query.ToString();
 		string url = builder.ToString();
 
-		return _httpClient.GetAsync(url, cancellationToken)
+		return httpClient.GetAsync(url, cancellationToken)
 			.ToAsyncEnumerable()
 			.Do(response => response.EnsureSuccessStatusCode())
 			.SelectMany(response => response.Content
@@ -100,7 +95,7 @@ internal partial class GameWagersClient : IGameWagersClient
 		IEnumerable<string> playerCodes,
 		CancellationToken cancellationToken = default)
 	{
-		var path = new Uri(_httpClient.BaseAddress!, $"/api/brandwagerplayerminsstats/{brandCode}/playerCodes");
+		var path = new Uri(httpClient.BaseAddress!, $"/api/brandwagerplayerminsstats/{brandCode}/playerCodes");
 		var builder = new UriBuilder(path);
 		var query = HttpUtility.ParseQueryString(builder.Query);
 		query["startOn"] = startOn.ToString("u");
@@ -114,7 +109,7 @@ internal partial class GameWagersClient : IGameWagersClient
 		builder.Query = query.ToString();
 		string url = builder.ToString();
 
-		return _httpClient.GetAsync(url, cancellationToken)
+		return httpClient.GetAsync(url, cancellationToken)
 			.ToAsyncEnumerable()
 			.Do(response => response.EnsureSuccessStatusCode())
 			.SelectMany(response => response.Content
@@ -128,7 +123,7 @@ internal partial class GameWagersClient : IGameWagersClient
 	}
 
 	public async ValueTask<GameWagerStatPlayerAccumInfo> GameWagerStatGetPlayerAccumAsync(string playerCode, CancellationToken cancellationToken = default)
-		=> await _httpClient.GetAsync($"/stat/{playerCode}/accum", cancellationToken)
+		=> await httpClient.GetAsync($"/stat/{playerCode}/accum", cancellationToken)
 		.ToAsyncEnumerable()
 		.Do(response => response.EnsureSuccessStatusCode())
 		.Where(response => response.StatusCode == System.Net.HttpStatusCode.OK)
