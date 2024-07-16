@@ -51,7 +51,6 @@ app: {{ include "game-gamewagers.name" . }}
 tgs.kind: game
 tgs.game.kind: gamewagers
 tgs.gamewagers.kind: gamewagers
-tgs.node.selector.kind: gamewagers
 {{- end }}
 
 {{/*
